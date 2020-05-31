@@ -146,8 +146,8 @@ public class Menu implements Screen {
                 if (MyGdxGame.prefs.getBoolean("sound"))
                     menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
 
-                menu.setScreen(MyGdxGame.ScreenMenuLevelSelect);
-
+                //  menu.setScreen(MyGdxGame.ScreenMenuLevelSelect);
+                menu.setScreen(new Win_screen(menu));
                 super.clicked(event, x, y);
             }
         });

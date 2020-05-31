@@ -222,7 +222,7 @@ public class MainGame implements Screen {
             game.setScreen(new Win_screen(game));
             size += Gdx.graphics.getDeltaTime() * 7;
             blockcontrol = true;
-            System.out.println(size * 3);
+
             MyGdxGame.batch.draw(
                     portaltexture,
                     positionenemyx + 26,
@@ -258,17 +258,6 @@ public class MainGame implements Screen {
 
         }
 
-
-//        if (timeportal / 4 > 1.5) {
-//            flag = false;
-//
-//        }
-//        if (timeportal / 4 < 0) {
-//            flag = true;
-//            portal = false;
-//            temp = true;
-//
-//        }
     }
 
     private void flower() {
