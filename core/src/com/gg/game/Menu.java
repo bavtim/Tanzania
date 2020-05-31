@@ -14,14 +14,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Menu implements Screen {
 
-    public static MyGdxGame menu;
-    Stage stage;
+    private MyGdxGame menu;
+    private Stage stage;
     private Sprite MenuScreen;
     private Texture backgroundmenu;
 
     public Menu(MyGdxGame menu) {
-        Menu.menu = menu;
+        this.menu = menu;
         buttons();
+        menu.music.play();
+        menu.music.setVolume(MyGdxGame.prefs.getInteger("volume", 10) / 100f);
+        menu.music.setLooping(true);
+
+        if (!MyGdxGame.prefs.getBoolean("music"))
+            menu.music.pause();
 
     }
 
@@ -29,7 +35,6 @@ public class Menu implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-
 
     }
 
@@ -78,7 +83,7 @@ public class Menu implements Screen {
 
     }
 
-    public void buttons() {
+    private void buttons() {
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
 
 
@@ -93,11 +98,11 @@ public class Menu implements Screen {
         Image prize = new Image(new Texture("Menu/prize.png"));
         final Image play = new Image(new Texture("Menu/play.png"));
         Image setting = new Image(new Texture("Menu/setting.png"));
-        about.setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getHeight() / 5);
-        leader.setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getHeight() / 5);
-        prize.setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getHeight() / 5);
-        play.setSize(Gdx.graphics.getHeight() / 4, Gdx.graphics.getHeight() / 4);
-        setting.setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getHeight() / 5);
+        about.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
+        leader.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
+        prize.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
+        play.setSize(Gdx.graphics.getHeight() / 4f, Gdx.graphics.getHeight() / 4f);
+        setting.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
 
         about.addListener(new ClickListener() {
             @Override
@@ -131,7 +136,7 @@ public class Menu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (MyGdxGame.prefs.getBoolean("sound"))
                     menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
-                if (MyGdxGame.prefs.getBoolean("firsttime", true)) ;
+
                 menu.setScreen(MyGdxGame.ScreenMenuLevelSelect);
 
                 super.clicked(event, x, y);

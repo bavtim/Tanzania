@@ -1,4 +1,5 @@
 package com.gg.game;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -7,7 +8,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -54,14 +54,8 @@ public class MyGdxGame extends Game {
 		denied= Gdx.audio.newSound(Gdx.files.internal("music/denied.mp3"));
 		tab1= Gdx.audio.newSound(Gdx.files.internal("music/Tab1.mp3"));
 		tab2= Gdx.audio.newSound(Gdx.files.internal("music/Tab2.mp3"));
-
 		music= Gdx.audio.newMusic(Gdx.files.internal("music/menu.mp3"));
-		music.play();
-		music.setVolume(prefs.getInteger("volume",10)/100f);
-		music.setLooping(true);
 
-		if(!prefs.getBoolean("music"))
-		music.pause();
 
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("ttf/segoeprb.ttf"));
 		batch = new SpriteBatch();
@@ -90,7 +84,7 @@ public class MyGdxGame extends Game {
 	public void dispose() {
 
 		batch.dispose();
-		generator.dispose(); ;
+		generator.dispose();
 		font.dispose();
 
 
