@@ -90,7 +90,7 @@ public class Win_screen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        stage.dispose(); zv.dispose();
     }
 
     private void btn() {

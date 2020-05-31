@@ -98,6 +98,7 @@ public class Bootscreen implements Screen {
     public void dispose() {
         font.dispose();
         Bootscreen_IMG.dispose();
+
     }
 
 }

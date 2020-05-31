@@ -84,7 +84,6 @@ public class Top implements Screen {
 
     @Override
     public void dispose() {
-        menu.dispose();
         stage.dispose();
     }
 

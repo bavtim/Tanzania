@@ -113,7 +113,7 @@ public class Settings implements Screen {
 
     @Override
     public void dispose() {
-        menu.dispose();
+
         backgroundmenu.dispose();
         background.dispose();
         list.dispose();

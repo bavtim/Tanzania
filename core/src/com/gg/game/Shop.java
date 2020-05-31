@@ -95,7 +95,6 @@ public class Shop implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        menu.dispose();
     }
 
     public void btn() {

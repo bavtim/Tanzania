@@ -16,7 +16,7 @@ import com.gg.game.utils.Constants;
 
 public class About implements Screen {
     private Stage stage;
-    MyGdxGame menu;
+    private MyGdxGame menu;
     private Sprite MenuScreen;
     private Sprite backgroundsprite;
     private Sprite listsprite;

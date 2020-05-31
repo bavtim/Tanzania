@@ -94,7 +94,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
 
     @Override
     public void dispose() {
-        menu.dispose();
+
         stage.dispose();
     }
 

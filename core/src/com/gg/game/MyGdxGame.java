@@ -89,6 +89,10 @@ public class MyGdxGame extends Game {
 	}
 	public void dispose() {
 
+		batch.dispose();
+		generator.dispose(); ;
+		font.dispose();
+
 
 	}
 	private void TextureAtlas(){
