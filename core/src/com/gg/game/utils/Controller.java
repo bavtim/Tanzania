@@ -18,7 +18,7 @@ public class Controller {
 
     private Viewport viewport;
     private Stage stage;
-    private boolean upPressed, leftPressed, rightPressed, escPressed, bulletPressed, menu;
+    private boolean upPressed, leftPressed, rightPressed, escPressed, bulletPressed, workmode = false;
 
     public Controller() {
         OrthographicCamera camera = new OrthographicCamera();
@@ -69,6 +69,7 @@ public class Controller {
     }
 
     private void createControll() {
+
         escPressed = false;
         gamemod();
         stage.clear();

@@ -102,8 +102,24 @@ public class MainGame implements Screen {
     public static boolean menumodeflag = false;
     public static boolean blockanimwater = false;
     private boolean freeze = false;
+    private Sprite MenuScreen;
+    private Sprite backgroundsprite;
+    private Sprite listsprite;
+    private Sprite headersprite;
     public MainGame(MyGdxGame game) {
         this.game = game;
+
+        backgroundsprite = new Sprite(new Texture("rating/bg.png"));
+        listsprite = new Sprite(new Texture("rating/table.png"));
+        headersprite = new Sprite(new Texture("pause/header.png"));
+        headersprite.setSize(Gdx.graphics.getHeight() * 0.8f * 0.9f / Constants.PPM * 2, Gdx.graphics.getHeight() * 0.3f / Constants.PPM * 2);
+        backgroundsprite.setSize(Gdx.graphics.getHeight() / Constants.PPM * 2, Gdx.graphics.getHeight() * 0.8f / Constants.PPM * 2);
+        listsprite.setSize(Gdx.graphics.getHeight() * 0.9f / Constants.PPM * 2, Gdx.graphics.getHeight() * 0.8f * 0.9f / Constants.PPM * 2);
+
+        backgroundsprite.setPosition(Gdx.graphics.getWidth() / 2f / Constants.PPM, Gdx.graphics.getHeight() / 2f / Constants.PPM - backgroundsprite.getHeight() / 2 / Constants.PPM - Gdx.graphics.getHeight() / 10f / Constants.PPM);
+        listsprite.setPosition(Gdx.graphics.getWidth() / 2f / Constants.PPM * 1.10f, Gdx.graphics.getHeight() / 2f / Constants.PPM * 1.10f - listsprite.getHeight() / 2 / Constants.PPM - Gdx.graphics.getHeight() / 10f / Constants.PPM);
+        headersprite.setPosition(Gdx.graphics.getWidth() / 2f / Constants.PPM * 1.25f, Gdx.graphics.getHeight() / Constants.PPM * 1.5f + headersprite.getHeight() / Constants.PPM);
+
         bullet = new Texture("Tilemap/bullet.png");
         dim = new Texture("Tilemap/dim.png");
         box = new Array<>();
@@ -179,6 +195,7 @@ public class MainGame implements Screen {
 
         if (controller.isEscPressed())
             menumodeflag = true;
+
         menumode();
 
 
@@ -1042,7 +1059,14 @@ public class MainGame implements Screen {
             }
             freeze = false;
         }
-
+        if (controller.isEscPressed()) {
+            System.out.println(131);
+            MyGdxGame.batch.begin();
+            backgroundsprite.draw(MyGdxGame.batch);
+            listsprite.draw(MyGdxGame.batch);
+            headersprite.draw(MyGdxGame.batch);
+            MyGdxGame.batch.end();
+        }
 
     }
 }
