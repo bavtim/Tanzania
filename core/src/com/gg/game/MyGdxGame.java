@@ -160,7 +160,7 @@ public class MyGdxGame extends Game {
 			Gdx.app.postRunnable(new Runnable() {
 				@Override
 				public void run() {
-					//TextureAtlas();
+					TextureAtlas();
 
 					long splash_elapsed_time = System.currentTimeMillis() - splash_start_time;
 					if (splash_elapsed_time < MyGdxGame.SPLASH_MINIMUM_MILLIS) {

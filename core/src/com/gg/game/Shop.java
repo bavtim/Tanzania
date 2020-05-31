@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.gg.game.utils.Temp;
 
 public class Shop implements Screen {
     private Stage stage;
@@ -138,7 +137,11 @@ public class Shop implements Screen {
                 shop2btn.setVisible(false);
                 shop3btn.setVisible(false);
                 exitflag = false;
-                strtemp = "Вы получили 1 звезду!\nВаш счет равен:" + ++Temp.Countstar;
+                MyGdxGame.prefs.putInteger("Countstar", MyGdxGame.prefs.getInteger("Countstar", 0) + 1);
+
+                MyGdxGame.prefs.getInteger("Countstar", 0);
+                strtemp = "Вы получили 1 звезду!\nВаш счет равен:" + MyGdxGame.prefs.getInteger("Countstar", 0);
+                MyGdxGame.prefs.flush();
                 glyphLayout.setText(menu.font, strtemp);
                 super.clicked(event, x, y);
             }
@@ -155,8 +158,10 @@ public class Shop implements Screen {
                 shop2btn.setVisible(false);
                 shop3btn.setVisible(false);
                 exitflag = false;
-                Temp.Countstar += 5;
-                strtemp = "Вы получили 5 звезд!\nВаш счет равен:" + Temp.Countstar;
+                MyGdxGame.prefs.putInteger("Countstar", MyGdxGame.prefs.getInteger("Countstar", 0) + 5);
+
+                MyGdxGame.prefs.getInteger("Countstar", 0);
+                strtemp = "Вы получили 5 звезд!\nВаш счет равен:" + MyGdxGame.prefs.getInteger("Countstar", 0);
                 glyphLayout.setText(menu.font, strtemp);
                 super.clicked(event, x, y);
             }
