@@ -95,7 +95,14 @@ public class Menu implements Screen {
 
 
         Table btn = new Table();
-        final Image about = new Image(new Texture("Menu/about.png"));
+        final Image about = new Image();
+        if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
+            about.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("btn/about.png"))));
+        } else {
+
+            about.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("btn/upgrade.png"))));
+        }
+
         Image leader = new Image(new Texture("btn/shop.png"));
         Image prize = new Image(new Texture("Menu/prize.png"));
         Image play = new Image(new Texture("Menu/play.png"));
@@ -146,8 +153,8 @@ public class Menu implements Screen {
                 if (MyGdxGame.prefs.getBoolean("sound"))
                     menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
 
-                //  menu.setScreen(MyGdxGame.ScreenMenuLevelSelect);
-                menu.setScreen(new Win_screen(menu, (byte) 0));
+                menu.setScreen(MyGdxGame.ScreenMenuLevelSelect);
+                //menu.setScreen(new Win_screen(menu, (byte) 0));
                 super.clicked(event, x, y);
             }
         });

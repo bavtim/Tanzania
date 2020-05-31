@@ -1,6 +1,5 @@
 package com.gg.game;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -105,7 +104,7 @@ public class MainGame implements Screen {
         this.game = game;
         bullet = new Texture("Tilemap/bullet.png");
         dim = new Texture("Tilemap/dim.png");
-        box = new Array<Body>();
+        box = new Array<>();
         world = new World(new Vector2(0, -20), true);
         cl = new B2dContactListener();
         world.setContactListener(cl);
@@ -174,7 +173,7 @@ public class MainGame implements Screen {
             rend.render(world, camera.combined);
         Draw();
         renderer.render(cloud);
-        if (Gdx.app.getType() == Application.ApplicationType.Android)
+        //if (Gdx.app.getType() == Application.ApplicationType.Android)
             controller.draw();
 
         cameraposition();
@@ -312,10 +311,7 @@ public class MainGame implements Screen {
 
     private void Draw() {
         if (init) {
-
             if (!cl.playerCanJump()) {
-
-
                 animation_pers_y += Constants.Speed_animation_y * Gdx.graphics.getDeltaTime();
                 if (animation_pers_y > MyGdxGame.Animation_pers_jump.length - 1)
                     animation_pers_y = MyGdxGame.Animation_pers_jump.length - 1;
@@ -435,9 +431,6 @@ public class MainGame implements Screen {
     private void createRect(float x, float y) {
 
         PolygonShape shape;
-//        ChainShape shape1;
-////        shape1= new ChainShape();
-////        shape1.createChain(new Vector2[]{new Vector2(-1.9f,-1.99f),new Vector2(1.9f,-1.99f)});
         PolygonShape shape1;
         shape1 = new PolygonShape();
         shape1.setAsBox(100 / Constants.PPM, 127 / Constants.PPM);
@@ -492,7 +485,6 @@ public class MainGame implements Screen {
                 animation_pers_x_right = 0;
 
 
-//System.out.println(timershot);
                 if (timershot > 1) {
 
 

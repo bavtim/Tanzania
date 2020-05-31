@@ -26,13 +26,14 @@ public class Controller {
         stage.setDebugAll(true);
         Gdx.input.setInputProcessor(stage);
         Table gamepad = new Table();
-        gamepad.left().bottom();
+
         final Image upImg = new Image(new Texture("buttons/arrowup.png"));
         final Image leftImg = new Image(new Texture("buttons/arrowleft.png"));
         final Image rightImg = new Image(new Texture("buttons/arrowright.png"));
         upImg.setSize(150, 150);
         leftImg.setSize(150, 150);
         rightImg.setSize(150, 150);
+
         upImg.addListener(new ClickListener() {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
@@ -93,16 +94,14 @@ public class Controller {
             }
         });
 
-        gamepad.add();
-
-        gamepad.add(upImg).size(upImg.getWidth(), upImg.getHeight()).pad(5, 5, 5, 5);
-        gamepad.add();
-        gamepad.row();
-        gamepad.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight()).pad(5, 5, 5, 5);
-        gamepad.add();
-        gamepad.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight()).pad(5, 5, 5, 5);
-
-        gamepad.setPosition(Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 8);
+        gamepad.add().right();
+//        gamepad.add(upImg).size(upImg.getWidth(), upImg.getHeight()).pad(5, 5, 5, 5).right();
+//        gamepad.add().right();
+//        gamepad.row();
+//        gamepad.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight()).pad(5, 5, 5, 5).right();
+//        gamepad.add();
+//        gamepad.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight()).pad(5, 5, 5, 5).right();
+//
         stage.addActor(gamepad);
 
     }
