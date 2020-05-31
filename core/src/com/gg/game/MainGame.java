@@ -118,8 +118,8 @@ public class MainGame implements Screen {
         ParseTileMap();
         spawn();
         sprite = new Sprite(MyGdxGame.Animation_pers_run[12], 300, 150, 525, 660);
-        sprite.setPosition(Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2);
+        sprite.setPosition(Gdx.graphics.getWidth() / 2f - sprite.getWidth() / 2,
+                Gdx.graphics.getHeight() / 2f);
         controller = new Controller();
 
         boxsprite = new Texture("Tilemap/box.png");
@@ -220,8 +220,6 @@ public class MainGame implements Screen {
         }
         if (rect.getPosition().x >= positionenemyx + 24) {
             game.setScreen(new Win_screen(game));
-
-
             size += Gdx.graphics.getDeltaTime() * 7;
             blockcontrol = true;
             System.out.println(size * 3);
@@ -658,7 +656,7 @@ public class MainGame implements Screen {
     }
 
     private void spawn() {
-        Array<Body> bodies = new Array<Body>();
+        Array<Body> bodies = new Array<>();
 
         world.getBodies(bodies);
         for (int i = 0; i < world.getBodyCount(); i++) {
@@ -760,7 +758,7 @@ public class MainGame implements Screen {
     }
 
     private void createBox() {
-        Array<Body> bodies = new Array<Body>();
+        Array<Body> bodies = new Array<>();
         world.getBodies(bodies);
         for (int i = 0; i < world.getBodyCount(); i++) {
 
@@ -859,7 +857,7 @@ public class MainGame implements Screen {
     }
 
     private void heckpoint() {
-        if (rect.getPosition().x > positioncheckx && incheak != true) {
+        if (rect.getPosition().x > positioncheckx && !incheak) {
             positionx = positioncheckx;
             positiony = positionchecky;
             incheak = true;
@@ -901,7 +899,6 @@ public class MainGame implements Screen {
     }
 
     private void shot() {
-        System.out.println(123321);
         PolygonShape shape;
         shape = new PolygonShape();
         shape.setAsBox(0.75f, 0.75f);
