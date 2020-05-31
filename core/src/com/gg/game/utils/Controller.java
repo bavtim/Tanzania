@@ -17,7 +17,7 @@ public class Controller {
 
     private Viewport viewport;
     private Stage stage;
-    private boolean upPressed, leftPressed, rightPressed;
+    private boolean upPressed, leftPressed, rightPressed, escPressed, bulletPressed;
 
     public Controller() {
         OrthographicCamera camera = new OrthographicCamera();
@@ -26,13 +26,42 @@ public class Controller {
         stage.setDebugAll(true);
         Gdx.input.setInputProcessor(stage);
         Table gamepad = new Table();
+        gamepad.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        gamepad.setPosition(Gdx.graphics.getWidth() / 2f - gamepad.getWidth() / 2,
+                Gdx.graphics.getHeight() / 2f - gamepad.getHeight() / 2);
 
         final Image upImg = new Image(new Texture("buttons/arrowup.png"));
         final Image leftImg = new Image(new Texture("buttons/arrowleft.png"));
         final Image rightImg = new Image(new Texture("buttons/arrowright.png"));
+        final Image ecs = new Image(new Texture("buttons/menu.png"));
+        final Image bullet = new Image(new Texture("buttons/bulletico.png"));
         upImg.setSize(150, 150);
         leftImg.setSize(150, 150);
         rightImg.setSize(150, 150);
+        bullet.setSize(150, 150);
+        ecs.setSize(100, 100);
+
+        bullet.addListener(new ClickListener() {
+            @Override
+            public void touchDragged(InputEvent event, float x, float y, int pointer) {
+                bulletPressed = !(x > bullet.getWidth()) && !(x < 0) && !(y > bullet.getHeight()) && !(y < 0);
+
+
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bulletPressed = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                bulletPressed = false;
+
+            }
+        });
+
 
         upImg.addListener(new ClickListener() {
             @Override
@@ -77,8 +106,6 @@ public class Controller {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 rightPressed = !(x > rightImg.getWidth()) && !(x < 0) && !(y > rightImg.getHeight()) && !(y < 0);
-
-
             }
 
             @Override
@@ -93,9 +120,23 @@ public class Controller {
 
             }
         });
+        gamepad.defaults().expand();
+        gamepad.add().width(Gdx.graphics.getWidth() / 4f);
+        gamepad.add().width(Gdx.graphics.getWidth() / 4f);
+        gamepad.add().width(Gdx.graphics.getWidth() / 4f);
+        gamepad.add().width(Gdx.graphics.getWidth() / 4f);
+        gamepad.row();
+        gamepad.add().colspan(2);
+        gamepad.add(upImg).colspan(2).size(upImg.getWidth(), upImg.getHeight()).center().bottom();
+        gamepad.row();
+        gamepad.add(bullet).size(bullet.getWidth(), bullet.getHeight()).colspan(1);
 
-        gamepad.add().right();
-//        gamepad.add(upImg).size(upImg.getWidth(), upImg.getHeight()).pad(5, 5, 5, 5).right();
+        gamepad.add();
+        gamepad.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight()).center();
+        gamepad.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight()).center();
+        gamepad.row();
+
+
 //        gamepad.add().right();
 //        gamepad.row();
 //        gamepad.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight()).pad(5, 5, 5, 5).right();
@@ -121,10 +162,17 @@ public class Controller {
         return leftPressed;
     }
 
+    public boolean isBulletPressed() {
+        return bulletPressed;
+    }
     public boolean isRightPressed() {
+
         return rightPressed;
     }
 
+    public boolean isEscPressed() {
+        return rightPressed;
+    }
     public void resize(int width, int height) {
         viewport.update(width, height);
     }

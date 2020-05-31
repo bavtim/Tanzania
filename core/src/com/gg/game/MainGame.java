@@ -145,7 +145,7 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float delta) {
-        System.out.println(rect.getPosition());
+
         timerenemy += Gdx.graphics.getDeltaTime() * 2;
         if (timer <= 1)
             timer += Gdx.graphics.getDeltaTime();
@@ -479,8 +479,8 @@ public class MainGame implements Screen {
     private void gamepad_delta_xy() {
         rect.setGravityScale(1);
         if (!blockcontrol) {
-            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                animation_pers_x_stand = 0;
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || controller.isBulletPressed()) {
+                System.out.println(123);
                 animation_pers_x_left = 0;
                 animation_pers_x_right = 0;
 
@@ -490,9 +490,9 @@ public class MainGame implements Screen {
 
                     animation_pers_x_shoot = 0;
                     timershot = 0;
-                    System.out.println(temperflag);
+
                     if (temperflag) {
-                        System.out.println(123123);
+
                         shot();
                     }
 
@@ -504,7 +504,7 @@ public class MainGame implements Screen {
                     playerJump();
 
                 }
-                System.out.println(123213);
+
                 animation_pers_x_stand = 0;
                 animation_pers_x_right = 0;
                 animation_pers_x_left += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime();
@@ -853,7 +853,7 @@ public class MainGame implements Screen {
             if (bodies.get(i).getUserData() != null) {
 
                 if (bodies.get(i).getUserData().equals(Constants.TM_bullet)) {
-                    System.out.println(bodies.get(i).getPosition());
+
                     temperflag = false;
                     if (cl.isBulletdestroy()) {
 
@@ -974,7 +974,7 @@ public class MainGame implements Screen {
 
 
         if (enemy.getLinearVelocity().x > 0) {
-            System.out.println(12);
+
             enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
             animation_enemy_x_stand = 0;
             animation_enemy_x_right = 0;
@@ -994,7 +994,7 @@ public class MainGame implements Screen {
             animation_enemy_x_right += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
             if (animation_enemy_x_right > Animation_enemyork1_walk.length - 1)
                 animation_enemy_x_right = 0f;
-            System.out.println(animation_enemy_x_right);
+
             enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_right], 0, 0, 1619, 1197);
             enemysprite.setFlip(true, false);
             enemysprite.draw(MyGdxGame.batch);
