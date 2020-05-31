@@ -1060,11 +1060,7 @@ public class MainGame implements Screen {
             freeze = false;
         }
         if (controller.isEscPressed()) {
-            MyGdxGame.batch.begin();
-            backgroundsprite.draw(MyGdxGame.batch);
-            listsprite.draw(MyGdxGame.batch);
-            headersprite.draw(MyGdxGame.batch);
-            MyGdxGame.batch.end();
+
         }
 
     }

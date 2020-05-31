@@ -24,18 +24,25 @@ public class Controller {
         OrthographicCamera camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         stage = new Stage(viewport, MyGdxGame.batch);
-        stage.setDebugAll(true);
+        if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
+            stage.setDebugAll(true);
+        } else {
+            stage.setDebugAll(false);
+        }
         stagebg = new Stage(viewport, MyGdxGame.batch);
-        stagebg.setDebugAll(true);
+        if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
+            stagebg.setDebugAll(true);
+        } else {
+            stagebg.setDebugAll(false);
+        }
         Gdx.input.setInputProcessor(stage);
         Table table1 = new Table();
         table1.setSize(Gdx.graphics.getHeight() * 0.9f, Gdx.graphics.getHeight() * 0.7f);
         table1.setPosition(Gdx.graphics.getWidth() / 2.1f - table1.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2f - table1.getHeight() / 2 + Gdx.graphics.getHeight() / 10f);
-        Image BG = new Image(new Texture("btn/restart.png"));
-        Image LIST = new Image(new Texture("btn/restart.png"));
-        Image HEADER = new Image(new Texture("btn/restart.png"));
-
+        Image BG = new Image(new Texture("pause/bg.png"));
+        table1.add(BG);
+        stagebg.addActor(table1);
         createControll();
 
 
@@ -43,6 +50,8 @@ public class Controller {
     }
 
     public void draw() {
+        if (escPressed)
+            stagebg.draw();
         stage.draw();
 
     }
@@ -207,10 +216,10 @@ public class Controller {
 
         stage.clear();
         Table gamepad = new Table();
-
         gamepad.setSize(Gdx.graphics.getHeight() * 0.9f, Gdx.graphics.getHeight() * 0.7f);
         gamepad.setPosition(Gdx.graphics.getWidth() / 2.1f - gamepad.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2f - gamepad.getHeight() / 2 + Gdx.graphics.getHeight() / 10f);
+
         final Image exit = new Image(new Texture("rating/close_2.png"));
         final Image menu = new Image(new Texture("btn/menu.png"));
         final Image restart = new Image(new Texture("btn/restart.png"));
@@ -240,14 +249,14 @@ public class Controller {
         gamepad.defaults().expand();
         gamepad.add(exit).size(Gdx.graphics.getHeight() / 8f, Gdx.graphics.getHeight() / 8f).right().top().colspan(2);
         gamepad.row();
-        gamepad.add().height(Gdx.graphics.getHeight() / 5f);
+        gamepad.add().height(Gdx.graphics.getHeight() / 7f);
         gamepad.row();
         gamepad.add(menu).size(menu.getWidth(), menu.getHeight()).height(Gdx.graphics.getHeight() / 5f).center();
         gamepad.add(restart).size(menu.getWidth(), menu.getHeight()).height(Gdx.graphics.getHeight() / 5f).center();
         gamepad.row();
-        gamepad.add().height(Gdx.graphics.getHeight() / 5f);
+        gamepad.add().height(Gdx.graphics.getHeight() / 7f);
         gamepad.row();
-        gamepad.add().height(Gdx.graphics.getHeight() / 5f);
+        gamepad.add().height(Gdx.graphics.getHeight() / 7f);
         stage.addActor(gamepad);
 
     }

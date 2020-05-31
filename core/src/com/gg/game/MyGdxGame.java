@@ -28,7 +28,7 @@ public class MyGdxGame extends Game {
 	BitmapFont font;
 
 
-	static Preferences prefs;
+	public static Preferences prefs;
 
 	public static OrthographicCamera camera;
 
