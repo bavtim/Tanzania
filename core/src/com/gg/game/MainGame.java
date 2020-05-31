@@ -3,7 +3,6 @@ package com.gg.game;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,13 +17,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -35,26 +35,30 @@ import com.gg.game.utils.TiledObjectUtil;
 
 
 public class MainGame implements Screen {
-    float size = 1;
-    public static TextureRegion[] Animation_enemyork1_walk;
-    public static TextureRegion[] Animation_enemyork1_hurt;
-    public static TextureRegion[] Animation_enemyork1_idle;
-    float positionenemyx = 0, positionenemyy = 0;
-    Body enemy;
-    float animation_pers_x_shoot = 0;
-    Stage stagebg;
-    Stage stagef;
-    Image bg2;
-    Image bg1;
-    Image f2;
-    Image f1;
-    public Body rect;
-    public Body rectfoot;
+    private static final float STEP_TIME = 1f / 60f;
+    private static TextureRegion[] Animation_enemyork1_walk;
+    private static TextureRegion[] Animation_enemyork1_hurt;
+    private static TextureRegion[] Animation_enemyork1_idle;
+    private static float positionx = 10f, positiony = 10f;
+    private static float positioncheckx = 10f, positionchecky = 10f;
+    private static boolean incheak = false;
+    private float size = 1;
+    private float positionenemyx = 0, positionenemyy = 0;
+    private Body enemy;
+    private float animation_pers_x_shoot = 0;
+    private Stage stagebg;
+    private Stage stagef;
+    private Image bg2;
+    private Image bg1;
+    private Image f2;
+    private Image f1;
+    private Body rect;
+    private Body rectfoot;
     private B2dContactListener cl;
-    Array<Body> box;
+    private Array<Body> box;
     private OrthographicCamera camera;
-    Table table0;
-    Table table1;
+    private Table table0;
+    private Table table1;
     private MyGdxGame game;
     private TiledMap map;
     private TiledMapRenderer renderer;
@@ -67,39 +71,36 @@ public class MainGame implements Screen {
     private float animation_pers_y = 0;
     private boolean init = false;
     private byte direction_x = 0;
-    public static float positionx = 10f, positiony = 10f;
-    public static float positioncheckx = 10f, positionchecky = 10f;
     private Texture boxsprite;
-    static final float STEP_TIME = 1f / 60f;
-    float accumulator = 0;
-    boolean flag = true;
-    float positionflowerx = 0, positionflowery = 0;
-    private static boolean incheak = false;
-    int[] earth;
-    int[] cloud;
-    int[] check;
-    byte jump = 0;
-    int[] flower;
-    boolean portal;
-    boolean pers;
-    Controller controller;
-    Viewport viewport;
-    float timeportal = 0;
-    Texture portaltexture;
-    boolean blockcontrol;
-    boolean temp = true;
-    float timer = 0;
-    float timershot = 2;
-    boolean unlockdoublejump = false;
-    Texture bullet;
-    Texture dim;
-    float timerenemy = 0;
-    boolean flag1 = true;
-    boolean temperflag = true;
-    Sprite enemysprite;
-    float animation_enemy_x_stand = 0;
-    float animation_enemy_x_right = 0;
-    float animation_enemy_x_left = 0;
+    private float accumulator = 0;
+    private boolean flag = true;
+    private float positionflowerx = 0, positionflowery = 0;
+    private int[] earth;
+    private int[] cloud;
+    private int[] check;
+    private byte jump = 0;
+    private int[] flower;
+    private boolean portal;
+    private boolean pers;
+    private Controller controller;
+    private Viewport viewport;
+    private float timeportal = 0;
+    private Texture portaltexture;
+    private boolean blockcontrol;
+    private boolean temp = true;
+    private float timer = 0;
+    private float timershot = 2;
+    private boolean unlockdoublejump = false;
+    private Texture bullet;
+    private Texture dim;
+    private float timerenemy = 0;
+    private boolean flag1 = true;
+    private boolean temperflag = true;
+    private Sprite enemysprite;
+    private float animation_enemy_x_stand = 0;
+    private float animation_enemy_x_right = 0;
+    private float animation_enemy_x_left = 0;
+
     public MainGame(MyGdxGame game) {
         this.game = game;
         bullet = new Texture("Tilemap/bullet.png");
@@ -137,7 +138,6 @@ public class MainGame implements Screen {
     }
 
 
-
     @Override
     public void show() {
 
@@ -161,7 +161,7 @@ public class MainGame implements Screen {
 
         gamepad_delta_xy();
         bgparallaxdraw();
-        game.batch.setProjectionMatrix(camera.combined);
+        MyGdxGame.batch.setProjectionMatrix(camera.combined);
         stagebg.draw();
         renderer.setView(camera);
         renderer.render(earth);
@@ -170,12 +170,12 @@ public class MainGame implements Screen {
             renderer.render(check);
         flower();
         stagef.draw();
-        if (game.prefs.getBoolean("debugmode", true))
+        if (MyGdxGame.prefs.getBoolean("debugmode", true))
             rend.render(world, camera.combined);
         Draw();
         renderer.render(cloud);
         if (Gdx.app.getType() == Application.ApplicationType.Android)
-        controller.draw();
+            controller.draw();
 
         cameraposition();
         sprite.setPosition(rect.getPosition().x - 2, rect.getPosition().y - 2);
@@ -203,7 +203,7 @@ public class MainGame implements Screen {
         }
 
         if (timeportal / 4 < 1) {
-            game.batch.draw(
+            MyGdxGame.batch.draw(
                     portaltexture,
                     positionenemyx + 26,
                     positionenemyy - 2,
@@ -229,7 +229,7 @@ public class MainGame implements Screen {
 
 
             }
-            game.batch.draw(
+            MyGdxGame.batch.draw(
                     portaltexture,
                     positionenemyx + 26,
                     positionenemyy - 2,
@@ -245,7 +245,7 @@ public class MainGame implements Screen {
 
             );
         } else if (timeportal / 4 > 1) {
-            game.batch.draw(
+            MyGdxGame.batch.draw(
                     portaltexture,
                     positionenemyx + 26,
                     positionenemyy - 2,
@@ -315,7 +315,7 @@ public class MainGame implements Screen {
 
         map.dispose();
 
-        game.batch.dispose();
+        MyGdxGame.batch.dispose();
         world.dispose();
         rend.dispose();
 
@@ -362,19 +362,19 @@ public class MainGame implements Screen {
             }
         }
 
-        game.batch.begin();
+        MyGdxGame.batch.begin();
         drawBox();
         if (portal)
             portal();
         if (pers)
-            sprite.draw(game.batch);
+            sprite.draw(MyGdxGame.batch);
         if (flag1)
             enemydraw();
         if (!flag1)
             finsih();
 
         shotdraw();
-        game.batch.end();
+        MyGdxGame.batch.end();
     }
 
     private void portal() {
@@ -389,7 +389,7 @@ public class MainGame implements Screen {
 
 
         if (timeportal / 4 < 1) {
-            game.batch.draw(
+            MyGdxGame.batch.draw(
                     portaltexture,
                     positionx - 3,
                     positiony - 2,
@@ -405,7 +405,7 @@ public class MainGame implements Screen {
             );
         }
         if (timeportal / 4 > 1 && timeportal / 4 < 1.5f) {
-            game.batch.draw(
+            MyGdxGame.batch.draw(
                     portaltexture,
                     positionx - 3,
                     positiony - 2,
@@ -540,8 +540,9 @@ public class MainGame implements Screen {
                     if (rect.getLinearVelocity().x > -Constants.Max_speed)
                         rect.applyForceToCenter(-Constants.Force_x, 0, true);
                 } else {
-                    if (rect.getLinearVelocity().x > -Constants.Max_speed)
-                        rect.applyForceToCenter(-Constants.Force_x / 2, 0, true);
+                    if (rect.getLinearVelocity().x > -Constants.Max_speed) {
+                        rect.applyForceToCenter(-Constants.Force_x / 2f, 0, true);
+                    }
                 }
 
 
@@ -567,7 +568,7 @@ public class MainGame implements Screen {
                 } else {
 
                     if (rect.getLinearVelocity().x < Constants.Max_speed)
-                        rect.applyForceToCenter(Constants.Force_x / 2, 0, true);
+                        rect.applyForceToCenter(Constants.Force_x / 2f, 0, true);
                 }
 
 
@@ -771,7 +772,7 @@ public class MainGame implements Screen {
     private void drawBox() {
         for (Body bod : box) {
 
-            game.batch.draw(boxsprite,
+            MyGdxGame.batch.draw(boxsprite,
                     bod.getPosition().x - 1,
                     bod.getPosition().y - 1,
                     1,
@@ -791,10 +792,10 @@ public class MainGame implements Screen {
     private void parallax() {
 
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-        stagef = new Stage(viewport, game.batch);
+        stagef = new Stage(viewport, MyGdxGame.batch);
 
 
-        stagebg = new Stage(viewport, game.batch);
+        stagebg = new Stage(viewport, MyGdxGame.batch);
 
 
         bg1 = new Image(new Texture("Tilemap/bg_jungle.png"));
@@ -862,7 +863,7 @@ public class MainGame implements Screen {
 
     private void shotdraw() {
 
-        Array<Body> bodies = new Array<Body>();
+        Array<Body> bodies = new Array<>();
 
         world.getBodies(bodies);
         for (int i = 0; i < world.getBodyCount(); i++) {
@@ -879,9 +880,9 @@ public class MainGame implements Screen {
                         temperflag = true;
                     }
                     if (bodies.get(i).getLinearVelocity().x > 0)
-                        game.batch.draw(bullet, bodies.get(i).getPosition().x - 2f, bodies.get(i).getPosition().y - 0.75f, 3, 1.5f, 0, 0, 256, 128, true, false);
+                        MyGdxGame.batch.draw(bullet, bodies.get(i).getPosition().x - 2f, bodies.get(i).getPosition().y - 0.75f, 3, 1.5f, 0, 0, 256, 128, true, false);
                     else if (bodies.get(i).getLinearVelocity().x < 0)
-                        game.batch.draw(bullet, bodies.get(i).getPosition().x - 1, bodies.get(i).getPosition().y - 0.75f, 3, 1.5f, 0, 0, 256, 128, false, false);
+                        MyGdxGame.batch.draw(bullet, bodies.get(i).getPosition().x - 1, bodies.get(i).getPosition().y - 0.75f, 3, 1.5f, 0, 0, 256, 128, false, false);
 
 
                 }
@@ -1004,7 +1005,7 @@ public class MainGame implements Screen {
             enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_left], 0, 0, 1619, 1197);
             enemysprite.setFlip(false, false);
 
-            enemysprite.draw(game.batch);
+            enemysprite.draw(MyGdxGame.batch);
         }
         if (enemy.getLinearVelocity().x < 0) {
             enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
@@ -1016,7 +1017,7 @@ public class MainGame implements Screen {
             System.out.println(animation_enemy_x_right);
             enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_right], 0, 0, 1619, 1197);
             enemysprite.setFlip(true, false);
-            enemysprite.draw(game.batch);
+            enemysprite.draw(MyGdxGame.batch);
         }
         if (enemy.getLinearVelocity().x == 0) {
             enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
@@ -1028,7 +1029,7 @@ public class MainGame implements Screen {
 
             enemysprite.setRegion(Animation_enemyork1_idle[(int) animation_enemy_x_stand], 0, 0, 1619, 1197);
             enemysprite.setFlip(true, false);
-            enemysprite.draw(game.batch);
+            enemysprite.draw(MyGdxGame.batch);
         }
 
     }

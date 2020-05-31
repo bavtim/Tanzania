@@ -5,32 +5,30 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Menu implements Screen {
 
+    public static MyGdxGame menu;
     Stage stage;
     private Sprite MenuScreen;
     private Texture backgroundmenu;
 
-    public static MyGdxGame menu;
-    public Menu( MyGdxGame menu) {
-        this.menu = menu;
+    public Menu(MyGdxGame menu) {
+        Menu.menu = menu;
         buttons();
 
     }
 
 
-
-
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-
 
 
     }
@@ -39,23 +37,23 @@ public class Menu implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(menu.prefs.getBoolean("debugmode", false)){
+        if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
             stage.setDebugAll(true);
-        }else {
+        } else {
             stage.setDebugAll(false);
         }
-        menu.batch.begin();
+        MyGdxGame.batch.begin();
 
-        MenuScreen.draw( menu.batch);
+        MenuScreen.draw(MyGdxGame.batch);
 
-        menu.batch.end();
+        MyGdxGame.batch.end();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        menu.camera.setToOrtho(false,Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
-        menu.viewport.update(width, height);
+        MyGdxGame.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        MyGdxGame.viewport.update(width, height);
 
     }
 
@@ -80,15 +78,14 @@ public class Menu implements Screen {
         stage.dispose();
 
     }
-    public void buttons(){
-        stage = new Stage(menu.viewport, menu.batch);
+
+    public void buttons() {
+        stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
 
 
-        backgroundmenu= new Texture("Menu/menu.jpg");
+        backgroundmenu = new Texture("Menu/menu.jpg");
         MenuScreen = new Sprite(backgroundmenu);
         MenuScreen.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-
 
 
         Table btn = new Table();
@@ -97,17 +94,17 @@ public class Menu implements Screen {
         Image prize = new Image(new Texture("Menu/prize.png"));
         final Image play = new Image(new Texture("Menu/play.png"));
         Image setting = new Image(new Texture("Menu/setting.png"));
-        about.setSize(Gdx.graphics.getHeight()/5,Gdx.graphics.getHeight()/5);
-        leader.setSize(Gdx.graphics.getHeight()/5,Gdx.graphics.getHeight()/5);
-        prize.setSize(Gdx.graphics.getHeight()/5,Gdx.graphics.getHeight()/5);
-        play.setSize(Gdx.graphics.getHeight()/4,Gdx.graphics.getHeight()/4);
-        setting.setSize(Gdx.graphics.getHeight()/5,Gdx.graphics.getHeight()/5);
+        about.setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getHeight() / 5);
+        leader.setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getHeight() / 5);
+        prize.setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getHeight() / 5);
+        play.setSize(Gdx.graphics.getHeight() / 4, Gdx.graphics.getHeight() / 4);
+        setting.setSize(Gdx.graphics.getHeight() / 5, Gdx.graphics.getHeight() / 5);
 
         about.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(menu.prefs.getBoolean("sound"))
-                    menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
+                if (MyGdxGame.prefs.getBoolean("sound"))
+                    menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
                 menu.setScreen(new About(menu));
                 super.clicked(event, x, y);
             }
@@ -115,8 +112,8 @@ public class Menu implements Screen {
         leader.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(menu.prefs.getBoolean("sound"))
-                    menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
+                if (MyGdxGame.prefs.getBoolean("sound"))
+                    menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
                 menu.setScreen(new Shop(menu));
                 super.clicked(event, x, y);
             }
@@ -124,8 +121,8 @@ public class Menu implements Screen {
         prize.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(menu.prefs.getBoolean("sound"))
-                    menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
+                if (MyGdxGame.prefs.getBoolean("sound"))
+                    menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
                 menu.setScreen(new Top(menu));
                 super.clicked(event, x, y);
             }
@@ -133,10 +130,10 @@ public class Menu implements Screen {
         play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(menu.prefs.getBoolean("sound"))
-                    menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
-                if(menu.prefs.getBoolean("firsttime",true));
-                menu.setScreen(menu.ScreenMenuLevelSelect);
+                if (MyGdxGame.prefs.getBoolean("sound"))
+                    menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
+                if (MyGdxGame.prefs.getBoolean("firsttime", true)) ;
+                menu.setScreen(MyGdxGame.ScreenMenuLevelSelect);
 
                 super.clicked(event, x, y);
             }
@@ -144,11 +141,10 @@ public class Menu implements Screen {
         setting.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(menu.prefs.getBoolean("sound"))
-                    menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
+                if (MyGdxGame.prefs.getBoolean("sound"))
+                    menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
 
                 menu.setScreen(new Settings(menu));
-
 
 
                 super.clicked(event, x, y);
@@ -156,13 +152,13 @@ public class Menu implements Screen {
         });
 
         btn.setFillParent(true);
-        btn.add(about).padLeft(20).padTop(20).size(about.getHeight(),about.getHeight()).left();
-        btn.add(setting).padRight(20).padTop(20).size(setting.getHeight(),setting.getHeight()).right();
+        btn.add(about).padLeft(20).padTop(20).size(about.getHeight(), about.getHeight()).left();
+        btn.add(setting).padRight(20).padTop(20).size(setting.getHeight(), setting.getHeight()).right();
         btn.row();
-        btn.add(play).size(play.getHeight(),play.getHeight()).colspan(2).expand();
+        btn.add(play).size(play.getHeight(), play.getHeight()).colspan(2).expand();
         btn.row().width(leader.getHeight());
-        btn.add(leader).padLeft(20).padBottom(20).size(leader.getHeight(),leader.getHeight()).left();
-        btn.add(prize).padRight(20).padBottom(20).size(prize.getHeight(),prize.getHeight()).right();
+        btn.add(leader).padLeft(20).padBottom(20).size(leader.getHeight(), leader.getHeight()).left();
+        btn.add(prize).padRight(20).padBottom(20).size(prize.getHeight(), prize.getHeight()).right();
         stage.addActor(btn);
     }
 
