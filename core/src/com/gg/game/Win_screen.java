@@ -19,12 +19,13 @@ public class Win_screen implements Screen {
     private Sprite backgroundsprite;
     private Sprite listsprite;
     private Sprite headersprite;
-    private Texture zv;
+    private byte countofstars = 0;
 
-    public Win_screen(MyGdxGame win) {
+    public Win_screen(MyGdxGame win, byte countofstars) {
+        this.countofstars = countofstars;
         this.menu = win;
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
-        zv = new Texture("you_win/star_1.png");
+
 
         MenuScreen = new Sprite(new Texture("Menu/menu.jpg"));
         backgroundsprite = new Sprite(new Texture("about/bg.png"));
@@ -62,7 +63,6 @@ public class Win_screen implements Screen {
         backgroundsprite.draw(MyGdxGame.batch);
         listsprite.draw(MyGdxGame.batch);
         headersprite.draw(MyGdxGame.batch);
-        MyGdxGame.batch.draw(zv, Gdx.graphics.getWidth() / 2f - 635 / 5f, Gdx.graphics.getHeight() / 2f - 325 / 4f, Gdx.graphics.getHeight() / 2f, Gdx.graphics.getHeight() / 2f * 0.75F);
         MyGdxGame.batch.end();
         stage.draw();
     }
@@ -90,7 +90,7 @@ public class Win_screen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose(); zv.dispose();
+        stage.dispose();
     }
 
     private void btn() {
@@ -98,10 +98,9 @@ public class Win_screen implements Screen {
         btn.setSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight() * 0.8f);
         btn.setPosition(Gdx.graphics.getWidth() / 2f - btn.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2f - btn.getHeight() / 2 - Gdx.graphics.getHeight() / 10f);
-
-        final Image vk = new Image(new Texture("btn/play.png"));
-
-        vk.addListener(new ClickListener() {
+        final Image count = new Image(new Texture("you_win/star_" + countofstars + ".png"));
+        final Image play = new Image(new Texture("btn/play.png"));
+        play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (MyGdxGame.prefs.getBoolean("sound"))
@@ -114,11 +113,9 @@ public class Win_screen implements Screen {
         btn.defaults().expand();
         btn.add().size(Gdx.graphics.getHeight() / 8f, Gdx.graphics.getHeight() / 8f).right().top().colspan(2);
         btn.row();
-        btn.add().height(Gdx.graphics.getHeight() / 6f);
+        btn.add(count).height(Gdx.graphics.getHeight() / 3f);
         btn.row();
-        btn.add().height(Gdx.graphics.getHeight() / 6f).width(listsprite.getWidth() / 2f);
-        btn.row();
-        btn.add(vk).size(Gdx.graphics.getHeight() / 6f, Gdx.graphics.getHeight() / 6f).left().center();
+        btn.add(play).size(Gdx.graphics.getHeight() / 6f, Gdx.graphics.getHeight() / 6f).left().center();
         btn.row();
         btn.add().height(Gdx.graphics.getHeight() / 6f);
         stage.addActor(btn);

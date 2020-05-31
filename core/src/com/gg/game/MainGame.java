@@ -219,7 +219,7 @@ public class MainGame implements Screen {
             );
         }
         if (rect.getPosition().x >= positionenemyx + 24) {
-            game.setScreen(new Win_screen(game));
+            game.setScreen(new Win_screen(game, (byte) 0));
             size += Gdx.graphics.getDeltaTime() * 7;
             blockcontrol = true;
 
