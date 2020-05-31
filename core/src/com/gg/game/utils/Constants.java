@@ -1,62 +1,62 @@
 package com.gg.game.utils;
 
 public class Constants {
-    public static final String Version ="1.1512v";
-    public static final String Vkurl ="https://vk.com/id390172232";
+    public static final String Version = "1.1512v";
+    public static final String Vkurl = "https://vk.com/id390172232";
 
-    public static final float PPM =64;
-    public static final int Max_speed=8;
-    public static final int Force_y=5500;
-    public static final int Force_x=400;
-    public static final float Speed_animation_x=15f; 
-    public static final float Speed_animation_y=13f;
-    public static final short[] Animation_jump_correction_y= new short[]{165,165,165,165,165,165,140,115,80,35,35,35,35,120,180,180,180,180,180,165,165 };
-    public static final short[] Animation_jump_correction_x= new short[]{325,345,400,425,450,400,380,290,290,210,230,285,320,320,340,400,400,380,350,320,320 };
+    public static final float PPM = 64;
+    public static final int Max_speed = 8;
+    public static final int Force_y = 5500;
+    public static final int Force_x = 400;
+    public static final float Speed_animation_x = 15f;
+    public static final float Speed_animation_y = 13f;
+    public static final short[] Animation_jump_correction_y = new short[]{165, 165, 165, 165, 165, 165, 140, 115, 80, 35, 35, 35, 35, 120, 180, 180, 180, 180, 180, 165, 165};
+    public static final short[] Animation_jump_correction_x = new short[]{325, 345, 400, 425, 450, 400, 380, 290, 290, 210, 230, 285, 320, 320, 340, 400, 400, 380, 350, 320, 320};
 
 
-    public static final String TM_earth_collision="collision-earth";
-    public static final float TM_earth_density=0f;
-    public static final float TM_earth_friction=1f;
-    public static final float TM_earth_restitution=0f;
+    public static final String TM_earth_collision = "collision-earth";
+    public static final float TM_earth_density = 0f;
+    public static final float TM_earth_friction = 1f;
+    public static final float TM_earth_restitution = 0f;
 
-    public static final String TM_wall_collision="collision-wall";
-    public static final float TM_wall_density=0f;
-    public static final float TM_wall_friction=0f;
-    public static final float TM_wall_restitution=0f;
+    public static final String TM_wall_collision = "collision-wall";
+    public static final float TM_wall_density = 0f;
+    public static final float TM_wall_friction = 0f;
+    public static final float TM_wall_restitution = 0f;
 
-    public static final String TM_kill_zone="kill_zone";
-    public static final float TM_kill_density=0f;
-    public static final float TM_kill_friction=0f;
-    public static final float TM_kill_restitution=0f;
+    public static final String TM_kill_zone = "kill_zone";
+    public static final float TM_kill_density = 0f;
+    public static final float TM_kill_friction = 0f;
+    public static final float TM_kill_restitution = 0f;
 
-    public static final String TM_roof_collision="collision-roof";
-    public static final float TM_roof_density=0f;
-    public static final float TM_roof_friction=0f;
-    public static final float TM_roof_restitution=0f;
+    public static final String TM_roof_collision = "collision-roof";
+    public static final float TM_roof_density = 0f;
+    public static final float TM_roof_friction = 0f;
+    public static final float TM_roof_restitution = 0f;
 
-    public static final String TM_box="box";
-    public static final float TM_box_density=0.5f;
-    public static final float TM_box_friction=0.5f;
-    public static final float TM_box_restitution=0f;
-    public static final String TM_spawn="spawn";
-    public static final String TM_player_foot="playerfoot";
-    public static final float TM_player_foot_density=0.3f;
-    public static final float TM_player_foot_friction=0.0f;
-    public static final float TM_player_foot_restitution=0f;
-    public static final String TM_player_body="playerbody";
-    public static final float TM_player_body_density=0.3f;
-    public static final float TM_player_body_friction=0.6f;
-    public static final float TM_player_body_restitution=0f;
-    public static final String TM_checkpoint="point";
-    public static final String TM_flower="flower2";
+    public static final String TM_box = "box";
+    public static final float TM_box_density = 0.5f;
+    public static final float TM_box_friction = 0.5f;
+    public static final float TM_box_restitution = 0f;
+    public static final String TM_spawn = "spawn";
+    public static final String TM_player_foot = "playerfoot";
+    public static final float TM_player_foot_density = 0.3f;
+    public static final float TM_player_foot_friction = 0.0f;
+    public static final float TM_player_foot_restitution = 0f;
+    public static final String TM_player_body = "playerbody";
+    public static final float TM_player_body_density = 0.3f;
+    public static final float TM_player_body_friction = 0.6f;
+    public static final float TM_player_body_restitution = 0f;
+    public static final String TM_checkpoint = "point";
+    public static final String TM_flower = "flower2";
 
-    public static final  String TM_bullet= "bullet";
-    public static final float TM_bullet_density=0.3f;
-    public static final float TM_bullet_friction=0f;
-    public static final float TM_bullet_restitution=1f;
+    public static final String TM_bullet = "bullet";
+    public static final float TM_bullet_density = 0.3f;
+    public static final float TM_bullet_friction = 0f;
+    public static final float TM_bullet_restitution = 1f;
 
-    public static final String TM_enemy_point="pointenemy";
-    public static final float TM_enemy_density=0.3f;
-    public static final float TM_enemy_friction=0.6f;
-    public static final float TM_enemy_restitution=0f;
+    public static final String TM_enemy_point = "pointenemy";
+    public static final float TM_enemy_density = 0.3f;
+    public static final float TM_enemy_friction = 0.6f;
+    public static final float TM_enemy_restitution = 0f;
 }

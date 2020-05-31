@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 
 public class MenuLevelSelect extends MyGdxGame implements Screen {
-    Stage stage;
+    private Stage stage;
     public static MyGdxGame menu;
     public static SpriteBatch batch;
     private Sprite MenuScreen;

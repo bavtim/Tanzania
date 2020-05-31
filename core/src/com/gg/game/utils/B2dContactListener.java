@@ -8,11 +8,11 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 
 
 public class B2dContactListener implements ContactListener {
-    public boolean bulletdestroy=false;
+    private boolean bulletdestroy=false;
     private int numFootContacts=0;
     public static boolean playerDead;
-    int enemylive=3;
-public B2dContactListener(){}
+    private int enemylive=3;
+    public B2dContactListener(){}
     @Override
     public void beginContact(Contact contact) {
         bulletdestroy=false;
@@ -92,7 +92,9 @@ public B2dContactListener(){}
     public boolean playerCanJump() { return numFootContacts > 0; }
     public boolean isPlayerDead() {return playerDead; }
     public boolean isBulletdestroy() {return bulletdestroy; }
-    public boolean isEnemydamage(){if(enemylive<=0)return true;else return false; }
+    public boolean isEnemydamage(){
+        return enemylive <= 0;
+    }
 
 
     @Override
