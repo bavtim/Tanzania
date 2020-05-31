@@ -58,7 +58,7 @@ public class MainGame implements Screen {
     private OrthographicCamera camera;
     private Table table0;
     private Table table1;
-    private MyGdxGame game;
+    private static MyGdxGame game;
     private TiledMap map;
     private TiledMapRenderer renderer;
     private World world;
@@ -107,7 +107,7 @@ public class MainGame implements Screen {
     private Sprite listsprite;
     private Sprite headersprite;
     public MainGame(MyGdxGame game) {
-        this.game = game;
+        MainGame.game = game;
 
         backgroundsprite = new Sprite(new Texture("rating/bg.png"));
         listsprite = new Sprite(new Texture("rating/table.png"));
@@ -1060,7 +1060,6 @@ public class MainGame implements Screen {
             freeze = false;
         }
         if (controller.isEscPressed()) {
-            System.out.println(131);
             MyGdxGame.batch.begin();
             backgroundsprite.draw(MyGdxGame.batch);
             listsprite.draw(MyGdxGame.batch);
@@ -1068,5 +1067,13 @@ public class MainGame implements Screen {
             MyGdxGame.batch.end();
         }
 
+    }
+
+    public static void backtomenu() {
+        game.setScreen(MyGdxGame.ScreenMenu);
+    }
+
+    public static void restart() {
+        // game.setScreen( new MainGame(game));
     }
 }
