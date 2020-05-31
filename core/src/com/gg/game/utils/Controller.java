@@ -14,7 +14,7 @@ import com.gg.game.MyGdxGame;
 
 public class Controller {
 
-    MyGdxGame game;
+
     private Viewport viewport;
     private Stage stage;
     private boolean upPressed, leftPressed, rightPressed;
@@ -128,5 +128,8 @@ public class Controller {
 
     public void resize(int width, int height) {
         viewport.update(width, height);
+    }
+    public void dispose(){
+         stage.dispose();
     }
 }

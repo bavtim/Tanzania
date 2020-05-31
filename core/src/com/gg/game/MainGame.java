@@ -312,12 +312,18 @@ public class MainGame implements Screen {
 
     @Override
     public void dispose() {
-
+    controller.dispose();
         map.dispose();
-
-        MyGdxGame.batch.dispose();
         world.dispose();
         rend.dispose();
+        stagebg.dispose();
+        stagef.dispose();
+
+        rend.dispose();
+        boxsprite.dispose();
+        portaltexture.dispose();
+        bullet.dispose();
+        dim.dispose();
 
     }
 
