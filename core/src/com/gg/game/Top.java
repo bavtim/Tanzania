@@ -20,7 +20,7 @@ public class Top implements Screen {
     private Sprite headersprite;
     public Top( MyGdxGame  top) {
         this.menu = top;
-        stage = new Stage(menu.viewport, menu.batch);
+        stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
 
 
         btn();
