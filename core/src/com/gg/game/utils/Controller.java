@@ -19,7 +19,6 @@ public class Controller {
     private Viewport viewport;
     private Stage stage, stagebg;
     private boolean upPressed, leftPressed, rightPressed, escPressed, bulletPressed;
-
     public Controller() {
         OrthographicCamera camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
