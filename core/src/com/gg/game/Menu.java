@@ -96,7 +96,7 @@ public class Menu implements Screen {
         Image about = new Image(new Texture("Menu/about.png"));
         Image leader = new Image(new Texture("btn/shop.png"));
         Image prize = new Image(new Texture("Menu/prize.png"));
-        final Image play = new Image(new Texture("Menu/play.png"));
+        Image play = new Image(new Texture("Menu/play.png"));
         Image setting = new Image(new Texture("Menu/setting.png"));
         about.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
         leader.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
@@ -109,7 +109,12 @@ public class Menu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (MyGdxGame.prefs.getBoolean("sound"))
                     menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
-                menu.setScreen(new About(menu));
+                if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
+                    menu.setScreen(new About(menu));
+                } else {
+                    menu.setScreen(new Upgrade(menu));
+                }
+
                 super.clicked(event, x, y);
             }
         });
