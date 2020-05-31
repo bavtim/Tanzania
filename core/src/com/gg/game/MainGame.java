@@ -223,7 +223,6 @@ public class MainGame implements Screen {
             size += Gdx.graphics.getDeltaTime() * 7;
             blockcontrol = true;
             System.out.println(size * 3);
-
             MyGdxGame.batch.draw(
                     portaltexture,
                     positionenemyx + 26,
