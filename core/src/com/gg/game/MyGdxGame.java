@@ -19,16 +19,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MyGdxGame extends Game {
 	public static Screen ScreenMenu;
-	public static Screen ScreenBootscreen;
-	public static Screen ScreenMenuSettings;
-	public static Screen ScreenMenuTop;
-	public static Screen ScreenMenuAbout;
-	public static Screen ScreenMenuUpgrade;
-	public static Screen ScreenMenuShop;
 	public static Screen ScreenMenuLevelSelect;
-	public static Screen ScreenGame;
-	public static Screen Screenw;
 	public static SpriteBatch batch;
+
 
 	FreeTypeFontGenerator generator ;
 	FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -37,7 +30,7 @@ public class MyGdxGame extends Game {
 
 	static Preferences prefs;
 
-	public OrthographicCamera camera;
+	public static OrthographicCamera camera;
 
 
 	public static FitViewport viewport;
@@ -84,8 +77,8 @@ public class MyGdxGame extends Game {
 		viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 
 		screen();
-		ScreenMenuLevelSelect= new MenuLevelSelect(this);
-		setScreen(ScreenBootscreen);
+
+		setScreen(new Bootscreen());
 		boot();
 
 	}
@@ -170,7 +163,7 @@ public class MyGdxGame extends Game {
 				@Override
 				public void run() {
 					TextureAtlas();
-					game();
+
 					long splash_elapsed_time = System.currentTimeMillis() - splash_start_time;
 					if (splash_elapsed_time < MyGdxGame.SPLASH_MINIMUM_MILLIS) {
 						Timer.schedule(
@@ -192,19 +185,12 @@ public  void menu(){
 	setScreen(ScreenMenu);
 }
 public void screen(){
-	Screenw=new w(this);
+
 	ScreenMenu = new Menu(this);
-	ScreenBootscreen = new Bootscreen(this);
-	ScreenMenuSettings = new Settings(this);
-	ScreenMenuShop = new Shop(this);
-	ScreenMenuTop = new Top(this);
-	ScreenMenuAbout= new About(this);
-	ScreenMenuUpgrade = new Upgrade(this);
+	ScreenMenuLevelSelect= new MenuLevelSelect(this);
 
 	}
-	public  void game(){
-		ScreenGame = new MainGame(this);
-	}
+
 
 
 }

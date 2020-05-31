@@ -18,10 +18,7 @@ public class Bootscreen implements Screen {
 
 
 
-    public Bootscreen(MyGdxGame bootscreen){
-        this.menu=bootscreen;
-
-    }
+    public Bootscreen(){ }
 
 
 
@@ -77,7 +74,7 @@ public class Bootscreen implements Screen {
 
         sprite.setColor(0,0,0, timer);
 
-        menu.camera.update();
+        MyGdxGame.camera.update();
         menu.batch.setProjectionMatrix(menu.camera.combined);
         font.setColor(0,0,0,timer1);
         menu.batch.begin();
@@ -89,7 +86,7 @@ public class Bootscreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        menu.camera.setToOrtho(false,Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+        MyGdxGame.camera.setToOrtho(false,Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
         sprite.setPosition(Gdx.graphics.getWidth()/2-256, Gdx.graphics.getHeight()/2-256);
         font.getData().setScale(Gdx.graphics.getWidth()/100);
     }

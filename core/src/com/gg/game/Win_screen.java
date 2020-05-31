@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
-public class w implements Screen {
+public class Win_screen implements Screen {
     Stage stage;
     MyGdxGame menu;
     private Sprite MenuScreen;
@@ -22,7 +22,7 @@ public class w implements Screen {
     private Sprite headersprite;
     private Texture zv;
 
-    public w(MyGdxGame win) {
+    public Win_screen(MyGdxGame win) {
         this.menu = win;
         stage = new Stage(menu.viewport, menu.batch);
 zv= new Texture("you_win/star_1.png");

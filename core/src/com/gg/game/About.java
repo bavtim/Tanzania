@@ -1,5 +1,4 @@
 package com.gg.game;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gg.game.utils.Constants;
-
 public class About implements Screen {
     Stage stage;
     MyGdxGame menu;
@@ -26,9 +24,6 @@ public class About implements Screen {
     public About( MyGdxGame  about) {
         this.menu = about;
         stage = new Stage(menu.viewport, menu.batch);
-
-
-
         MenuScreen = new Sprite(new Texture("Menu/menu.jpg"));
         backgroundsprite = new Sprite(new Texture("about/bg.png"));
         listsprite = new Sprite(new Texture("about/table.png"));

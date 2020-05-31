@@ -143,7 +143,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if(menu.prefs.getBoolean("sound"))
                     menu.tab2.play(menu.prefs.getInteger("volume",10)/10f);
-                menu.setScreen(menu.ScreenGame);
+                menu.setScreen(new MainGame(menu));
 
                 super.clicked(event, x, y);
             }

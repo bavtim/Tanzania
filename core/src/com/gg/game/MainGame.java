@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -135,6 +136,8 @@ public class MainGame implements Screen {
         enemysprite.setSize(8, 8);
     }
 
+
+
     @Override
     public void show() {
 
@@ -216,7 +219,7 @@ public class MainGame implements Screen {
             );
         }
         if (rect.getPosition().x >= positionenemyx + 24) {
-            game.setScreen(game.Screenw);
+            game.setScreen(new Win_screen(game));
 
 
             size += Gdx.graphics.getDeltaTime() * 7;

@@ -108,7 +108,7 @@ public class Menu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if(menu.prefs.getBoolean("sound"))
                     menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
-                menu.setScreen(menu.ScreenMenuAbout);
+                menu.setScreen(new About(menu));
                 super.clicked(event, x, y);
             }
         });
@@ -117,7 +117,7 @@ public class Menu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if(menu.prefs.getBoolean("sound"))
                     menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
-                menu.setScreen(menu.ScreenMenuShop);
+                menu.setScreen(new Shop(menu));
                 super.clicked(event, x, y);
             }
         });
@@ -126,7 +126,7 @@ public class Menu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if(menu.prefs.getBoolean("sound"))
                     menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
-                menu.setScreen(menu.ScreenMenuTop);
+                menu.setScreen(new Top(menu));
                 super.clicked(event, x, y);
             }
         });
@@ -147,7 +147,7 @@ public class Menu implements Screen {
                 if(menu.prefs.getBoolean("sound"))
                     menu.tab1.play(menu.prefs.getInteger("volume",10)/10f);
 
-                menu.setScreen(menu.ScreenMenuSettings);
+                menu.setScreen(new Settings(menu));
 
 
 
