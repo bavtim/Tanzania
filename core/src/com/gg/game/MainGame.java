@@ -85,7 +85,7 @@ public class MainGame implements Screen {
     private Viewport viewport;
     private float timeportal = 0;
     private Texture portaltexture;
-    private boolean blockcontrol;
+    public static boolean blockcontrol;
     private boolean temp = true;
     private float timer = 0;
     private float timershot = 2;
@@ -99,7 +99,9 @@ public class MainGame implements Screen {
     private float animation_enemy_x_stand = 0;
     private float animation_enemy_x_right = 0;
     private float animation_enemy_x_left = 0;
-
+    public static boolean menumodeflag = false;
+    public static boolean blockanimwater = false;
+    private boolean freeze = false;
     public MainGame(MyGdxGame game) {
         this.game = game;
         bullet = new Texture("Tilemap/bullet.png");
@@ -174,6 +176,13 @@ public class MainGame implements Screen {
         Draw();
         renderer.render(cloud);
         //if (Gdx.app.getType() == Application.ApplicationType.Android)
+
+        if (controller.isEscPressed())
+            menumodeflag = true;
+        menumode();
+
+
+
             controller.draw();
 
         cameraposition();
@@ -480,7 +489,7 @@ public class MainGame implements Screen {
         rect.setGravityScale(1);
         if (!blockcontrol) {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || controller.isBulletPressed()) {
-                System.out.println(123);
+
                 animation_pers_x_left = 0;
                 animation_pers_x_right = 0;
 
@@ -572,7 +581,6 @@ public class MainGame implements Screen {
     }
 
     private void playerJump() {
-//cl.playerCanJump()
 
         if (cl.playerCanJump()) {
             timer = 0;
@@ -816,7 +824,7 @@ public class MainGame implements Screen {
             }
         }
         for (Actor a : table1.getChildren()) {
-
+            if (!blockanimwater)
             a.setX(a.getX() + 0.075f);
 
             if (a.getX() > rect.getPosition().x + 20 - 1 / Constants.PPM / 2) {
@@ -1014,4 +1022,27 @@ public class MainGame implements Screen {
 
     }
 
+    private void menumode() {
+        if (menumodeflag) {
+            blockcontrol = true;
+            Array<Body> bodies = new Array<>();
+            world.getBodies(bodies);
+            for (int i = 0; i < world.getBodyCount(); i++) {
+                bodies.get(i).setActive(false);
+            }
+            menumodeflag = false;
+            blockanimwater = true;
+            freeze = true;
+        }
+        if (freeze) {
+            Array<Body> bodies = new Array<>();
+            world.getBodies(bodies);
+            for (int i = 0; i < world.getBodyCount(); i++) {
+                bodies.get(i).setActive(true);
+            }
+            freeze = false;
+        }
+
+
+    }
 }
