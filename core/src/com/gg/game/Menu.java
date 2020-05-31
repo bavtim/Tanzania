@@ -6,11 +6,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class Menu implements Screen {
 
@@ -93,7 +95,7 @@ public class Menu implements Screen {
 
 
         Table btn = new Table();
-        Image about = new Image(new Texture("Menu/about.png"));
+        final Image about = new Image(new Texture("Menu/about.png"));
         Image leader = new Image(new Texture("btn/shop.png"));
         Image prize = new Image(new Texture("Menu/prize.png"));
         Image play = new Image(new Texture("Menu/play.png"));
@@ -111,8 +113,10 @@ public class Menu implements Screen {
                     menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
                 if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
                     menu.setScreen(new About(menu));
+                    about.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("btn/about.png"))));
                 } else {
                     menu.setScreen(new Upgrade(menu));
+                    about.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("btn/upgrade.png"))));
                 }
 
                 super.clicked(event, x, y);
