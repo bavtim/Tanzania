@@ -101,8 +101,7 @@ public class MainGame implements Screen {
     private float animation_enemy_x_left = 0;
     public static boolean menumodeflag = false;
     public static boolean blockanimwater = false;
-    private boolean freeze = false;
-    private Sprite MenuScreen;
+
     private Sprite backgroundsprite;
     private Sprite listsprite;
     private Sprite headersprite;
@@ -191,7 +190,7 @@ public class MainGame implements Screen {
             rend.render(world, camera.combined);
         Draw();
         renderer.render(cloud);
-        System.out.println();
+
 
         if (controller.isEscPressed())
             menumodeflag = true;
