@@ -50,6 +50,8 @@ public class MyGdxGame extends Game {
 
 
 	public void create() {
+		Gdx.graphics.setResizable(false);
+		Gdx.graphics.setTitle("Танзания");
 		prefs = Gdx.app.getPreferences("Data");
 		denied= Gdx.audio.newSound(Gdx.files.internal("music/denied.mp3"));
 		tab1= Gdx.audio.newSound(Gdx.files.internal("music/Tab1.mp3"));

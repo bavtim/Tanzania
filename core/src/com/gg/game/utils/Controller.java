@@ -3,6 +3,8 @@ package com.gg.game.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -14,12 +16,32 @@ import com.gg.game.MainGame;
 import com.gg.game.MyGdxGame;
 
 public class Controller {
-
-
+    public static boolean escPressed;
+    private SpriteBatch batch;
+    private Sprite backgroundsprite;
+    private Sprite listsprite;
+    private Sprite headersprite;
     private Viewport viewport;
-    private Stage stage, stagebg;
-    private boolean upPressed, leftPressed, rightPressed, escPressed, bulletPressed;
+    private Sprite text;
+    private Stage stage;
+    private boolean upPressed, leftPressed, rightPressed, bulletPressed;
     public Controller() {
+        batch = new SpriteBatch();
+        text = new Sprite(new Texture("pause/text.png"));
+        backgroundsprite = new Sprite(new Texture("pause/bg.png"));
+        listsprite = new Sprite(new Texture("pause/table.png"));
+        headersprite = new Sprite(new Texture("pause/header.png"));
+
+        text.setSize(Gdx.graphics.getHeight() * 1f, Gdx.graphics.getHeight() * 0.5f);
+        headersprite.setSize(Gdx.graphics.getHeight() * 0.8f * 0.9f, Gdx.graphics.getHeight() * 0.3f);
+        backgroundsprite.setSize(Gdx.graphics.getHeight() * 1.3f, Gdx.graphics.getHeight() * 0.8f);
+        listsprite.setSize(Gdx.graphics.getHeight() * 0.9f * 1.3f, Gdx.graphics.getHeight() * 0.8f * 0.9f);
+
+        text.setPosition(Gdx.graphics.getWidth() / 2f - text.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - text.getWidth() / 4f);
+        backgroundsprite.setPosition(Gdx.graphics.getWidth() / 2f - backgroundsprite.getWidth() / 2, Gdx.graphics.getHeight() / 2f - backgroundsprite.getHeight() / 2 - Gdx.graphics.getHeight() / 10f);
+        listsprite.setPosition(Gdx.graphics.getWidth() / 2f - listsprite.getWidth() / 2, Gdx.graphics.getHeight() / 2f - listsprite.getHeight() / 2 - Gdx.graphics.getHeight() / 10f);
+        headersprite.setPosition(Gdx.graphics.getWidth() / 2f - headersprite.getWidth() / 2, Gdx.graphics.getHeight() / 2f + headersprite.getHeight() / 2);
+
         OrthographicCamera camera = new OrthographicCamera();
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
         stage = new Stage(viewport, MyGdxGame.batch);
@@ -28,20 +50,8 @@ public class Controller {
         } else {
             stage.setDebugAll(false);
         }
-        stagebg = new Stage(viewport, MyGdxGame.batch);
-        if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
-            stagebg.setDebugAll(true);
-        } else {
-            stagebg.setDebugAll(false);
-        }
+
         Gdx.input.setInputProcessor(stage);
-        Table table1 = new Table();
-        table1.setSize(Gdx.graphics.getHeight() * 0.9f, Gdx.graphics.getHeight() * 0.7f);
-        table1.setPosition(Gdx.graphics.getWidth() / 2.1f - table1.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2f - table1.getHeight() / 2 + Gdx.graphics.getHeight() / 10f);
-        Image BG = new Image(new Texture("pause/bg.png"));
-        table1.add(BG);
-        stagebg.addActor(table1);
         createControll();
 
 
@@ -49,8 +59,11 @@ public class Controller {
     }
 
     public void draw() {
-        if (escPressed)
-            stagebg.draw();
+        if (escPressed) {
+            menurender();
+
+        }
+
         stage.draw();
 
     }
@@ -84,7 +97,7 @@ public class Controller {
          stage.dispose();
     }
 
-    private void createControll() {
+    public void createControll() {
 
         escPressed = false;
         gamemod();
@@ -199,9 +212,9 @@ public class Controller {
         gamepad.add().colspan(2);
         gamepad.add(upImg).colspan(2).size(upImg.getWidth(), upImg.getHeight()).center().bottom();
         gamepad.row();
-        gamepad.add(bullet).size(bullet.getWidth(), bullet.getHeight()).colspan(1);
+        gamepad.add(bullet).size(bullet.getWidth(), bullet.getHeight()).colspan(2);
 
-        gamepad.add();
+
         gamepad.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight()).center();
         gamepad.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight()).center();
         gamepad.row();
@@ -210,14 +223,14 @@ public class Controller {
         stage.addActor(gamepad);
     }
 
-    private void createmenu() {
+    public void createmenu() {
         escPressed = true;
 
         stage.clear();
         Table gamepad = new Table();
-        gamepad.setSize(Gdx.graphics.getHeight() * 0.9f, Gdx.graphics.getHeight() * 0.7f);
-        gamepad.setPosition(Gdx.graphics.getWidth() / 2.1f - gamepad.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2f - gamepad.getHeight() / 2 + Gdx.graphics.getHeight() / 10f);
+        gamepad.setSize(Gdx.graphics.getHeight() * 1.3f, Gdx.graphics.getHeight() * 0.8f);
+        gamepad.setPosition(Gdx.graphics.getWidth() / 2f - gamepad.getWidth() / 2,
+                Gdx.graphics.getHeight() / 2f - gamepad.getHeight() / 2 - Gdx.graphics.getHeight() / 10f);
 
         final Image exit = new Image(new Texture("rating/close_2.png"));
         final Image menu = new Image(new Texture("btn/menu.png"));
@@ -250,10 +263,12 @@ public class Controller {
         gamepad.row();
         gamepad.add().height(Gdx.graphics.getHeight() / 7f);
         gamepad.row();
+        gamepad.add().height(Gdx.graphics.getHeight() / 7f);
+        gamepad.row();
+
         gamepad.add(menu).size(menu.getWidth(), menu.getHeight()).height(Gdx.graphics.getHeight() / 5f).center();
         gamepad.add(restart).size(menu.getWidth(), menu.getHeight()).height(Gdx.graphics.getHeight() / 5f).center();
-        gamepad.row();
-        gamepad.add().height(Gdx.graphics.getHeight() / 7f);
+
         gamepad.row();
         gamepad.add().height(Gdx.graphics.getHeight() / 7f);
         stage.addActor(gamepad);
@@ -263,7 +278,16 @@ public class Controller {
     private void gamemod() {
         MainGame.blockcontrol = false;
         MainGame.menumodeflag = false;
-        MainGame.blockanimwater = false;
+
+    }
+
+    private void menurender() {
+        batch.begin();
+        backgroundsprite.draw(batch);
+        listsprite.draw(batch);
+        headersprite.draw(batch);
+        text.draw(batch);
+        batch.end();
     }
 }
 

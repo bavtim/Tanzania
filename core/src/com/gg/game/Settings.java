@@ -296,4 +296,5 @@ public class Settings implements Screen {
         stage.addActor(btn);
 
     }
+
 }

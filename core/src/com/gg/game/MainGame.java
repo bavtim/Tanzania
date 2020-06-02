@@ -191,10 +191,22 @@ public class MainGame implements Screen {
             rend.render(world, camera.combined);
         Draw();
         renderer.render(cloud);
-        //if (Gdx.app.getType() == Application.ApplicationType.Android)
+        System.out.println();
 
         if (controller.isEscPressed())
             menumodeflag = true;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            if (Controller.escPressed) {
+                Controller.escPressed = false;
+                controller.createControll();
+            } else {
+                Controller.escPressed = true;
+                controller.createmenu();
+            }
+
+
+        }
 
         menumode();
 
@@ -1042,26 +1054,26 @@ public class MainGame implements Screen {
     private void menumode() {
         if (menumodeflag) {
             blockcontrol = true;
-            Array<Body> bodies = new Array<>();
-            world.getBodies(bodies);
-            for (int i = 0; i < world.getBodyCount(); i++) {
-                bodies.get(i).setActive(false);
-            }
+//            Array<Body> bodies = new Array<>();
+//            world.getBodies(bodies);
+//            for (int i = 0; i < world.getBodyCount(); i++) {
+//                bodies.get(i).setActive(false);
+//            }
             menumodeflag = false;
             blockanimwater = true;
-            freeze = true;
+//            freeze = true;
         }
-        if (freeze) {
-            Array<Body> bodies = new Array<>();
-            world.getBodies(bodies);
-            for (int i = 0; i < world.getBodyCount(); i++) {
-                bodies.get(i).setActive(true);
-            }
-            freeze = false;
+/*        if (freeze) {
+//            Array<Body> bodies = new Array<>();
+//            world.getBodies(bodies);
+//            for (int i = 0; i < world.getBodyCount(); i++) {
+//                bodies.get(i).setActive(true);
+//            }
+//            freeze = false;
         }
         if (controller.isEscPressed()) {
 
-        }
+        }*/
 
     }
 
