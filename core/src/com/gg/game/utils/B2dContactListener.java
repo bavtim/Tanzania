@@ -1,5 +1,5 @@
 package com.gg.game.utils;
-
+//импорты
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -8,19 +8,21 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 
 
 public class B2dContactListener implements ContactListener {
-    private boolean bulletdestroy=false;
-    private int numFootContacts=0;
-    public static boolean playerDead;
-    private int enemylive=3;
+    public static boolean playerDead;//флаг смерти персонажа
+    private boolean bulletdestroy = false;//флаг для уничтожения пули
+    private int numFootContacts = 0;//количество точек косания ГГ с землей
+    private int enemylive = 3;//количество жизни врага
     public B2dContactListener(){}
+
+    //начало контакта
     @Override
     public void beginContact(Contact contact) {
         bulletdestroy=false;
+        //получение контактируемых тел
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
-        System.out.println("A "+fa.getUserData());
-        System.out.println("b "+fb.getUserData());
+        //условия взаимодействия
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_bullet)||fb.getUserData() != null && fb.getUserData().equals(Constants.TM_bullet)) {
             if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_bullet)&&fb.getUserData() != null && fb.getUserData().equals(Constants.TM_enemy_point)){
 
@@ -44,7 +46,6 @@ public class B2dContactListener implements ContactListener {
         }
 
 
-
         if(fa == null || fb == null) return;
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_earth_collision)&&fb.getUserData() != null && fb.getUserData().equals(Constants.TM_player_foot)) {
             numFootContacts++;
@@ -60,13 +61,15 @@ public class B2dContactListener implements ContactListener {
         }
 
 
-
     }
 
+    //конец контакта
     @Override
     public void endContact(Contact contact) {
+        //получение контактируемых тел
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
+        //условия взаимодействия
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_bullet)||fb.getUserData() != null && fb.getUserData().equals(Constants.TM_bullet)) {
 
             bulletdestroy=false;
