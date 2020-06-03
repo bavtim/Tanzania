@@ -48,21 +48,21 @@ public class Constants {
     public static final float TM_player_foot_density = 0.3f;
     public static final float TM_player_foot_friction = 0.0f;
     public static final float TM_player_foot_restitution = 0f;
-
+    //характеристики тел типа "playerbody" : имя, плотность, трение , прыгучесть
     public static final String TM_player_body = "playerbody";
     public static final float TM_player_body_density = 0.3f;
     public static final float TM_player_body_friction = 0.6f;
     public static final float TM_player_body_restitution = 0f;
-
+    //характеристики тел типа "point" : имя
     public static final String TM_checkpoint = "point";
-
+    //характеристики тел типа "flower2" : имя
     public static final String TM_flower = "flower2";
-
+    //характеристики тел типа "bullet" : имя, плотность, трение , прыгучесть
     public static final String TM_bullet = "bullet";
     public static final float TM_bullet_density = 0.3f;
     public static final float TM_bullet_friction = 0f;
     public static final float TM_bullet_restitution = 1f;
-
+    //характеристики тел типа "pointenemy" : имя, плотность, трение , прыгучесть
     public static final String TM_enemy_point = "pointenemy";
     public static final float TM_enemy_density = 0.3f;
     public static final float TM_enemy_friction = 0.6f;
