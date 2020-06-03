@@ -109,7 +109,7 @@ public class Controller {
         final Image upImg = new Image(new Texture("buttons/arrowup.png"));
         final Image leftImg = new Image(new Texture("buttons/arrowleft.png"));
         final Image rightImg = new Image(new Texture("buttons/arrowright.png"));
-        final Image ecs = new Image(new Texture("buttons/menu.png"));
+        final Image ecs = new Image(new Texture("btn/menu.png"));
         final Image bullet = new Image(new Texture("buttons/bulletico.png"));
         upImg.setSize(150, 150);
         leftImg.setSize(150, 150);
