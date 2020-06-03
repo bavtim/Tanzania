@@ -79,7 +79,7 @@ public class Top implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override

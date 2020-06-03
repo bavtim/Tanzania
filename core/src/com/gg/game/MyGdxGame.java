@@ -1,5 +1,6 @@
 package com.gg.game;
 //импорты библиотек
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -26,15 +26,16 @@ public class MyGdxGame extends Game {
 	public static OrthographicCamera camera;//карера
 	public static FitViewport viewport;//переменная обрезания камеры
 	//массивы текстур для анимации персонажа
-	public static TextureRegion[] Animation_pers_blaster_shoot;
+
 	private static long SPLASH_MINIMUM_MILLIS = 1000L;//минимальное время для бутскрина
 	FreeTypeFontGenerator generator;//генератор шрифта
 	BitmapFont font;//шрифт
 	Music music;//музыка меню
-	public static TextureRegion[] Animation_pers_hurt;
-	public static TextureRegion[] Animation_pers_idle;
-	public static TextureRegion[] Animation_pers_jump;
-	public static TextureRegion[] Animation_pers_run;
+	//	public static TextureRegion[] Animation_pers_blaster_shoot;
+//	public static TextureRegion[] Animation_pers_hurt;
+//	public static TextureRegion[] Animation_pers_idle;
+//	public static TextureRegion[] Animation_pers_jump;
+//	public static TextureRegion[] Animation_pers_run;
 	Sound tab1;//звуки закрытия окон
 	Sound tab2;//звуки переключения и щелчков
 	Sound denied;//звуки отказа доступа
@@ -67,8 +68,9 @@ public class MyGdxGame extends Game {
 		//переход на экран загрузки игры
 		setScreen(new Bootscreen());
 		//запуск ассинхронного потока для подгрузки меню
-		boot();
-
+		//boot();
+		//TextureAtlas();
+		menu();
 	}
 
 	public void render() {
@@ -76,74 +78,71 @@ public class MyGdxGame extends Game {
 
 	}
 	public void dispose() {
-
 		batch.dispose();
 		generator.dispose();
 		font.dispose();
-
-
 	}
-	private void TextureAtlas(){
-		Animation_pers_blaster_shoot=new TextureRegion[8];
-		Animation_pers_hurt=new TextureRegion[10];
-		Animation_pers_idle=new TextureRegion[14];
-		Animation_pers_jump=new TextureRegion[21];
-		Animation_pers_run=new TextureRegion[14];
-		for(int i=0;i<Animation_pers_blaster_shoot.length;i++){
-			texture = new Texture("foxy/animation/blaster shoot/foxy-blaster shoot_"+i+".png");
-			Animation_pers_blaster_shoot[i]=new TextureRegion(texture);
-
-		}
-		for(int i=0;i<Animation_pers_hurt.length;i++){
-			if(i<10){
-				texture = new Texture("foxy/animation/hurt/foxy-hurt_0"+i+".png");
-				Animation_pers_hurt[i]=new TextureRegion(texture);
-
-			}else {
-				texture = new Texture("foxy/animation/hurt/foxy-hurt_"+i+".png");
-				Animation_pers_hurt[i]=new TextureRegion(texture);
-
-
-			}
-		}
-		for(int i=0;i<Animation_pers_idle.length;i++){
-			if(i<10){
-				texture = new Texture("foxy/animation/idle/foxy-idle_0"+i+".png");
-				Animation_pers_idle[i]=new TextureRegion(texture);
-
-			}else {
-				texture = new Texture("foxy/animation/idle/foxy-idle_"+i+".png");
-				Animation_pers_idle[i]=new TextureRegion(texture);
-
-
-			}
-		}
-		for(int i=0;i<Animation_pers_jump.length;i++){
-			if(i<10){
-				texture = new Texture("foxy/animation/jump/foxy-jump_0"+i+".png");
-				Animation_pers_jump[i]=new TextureRegion(texture);
-
-			}else {
-				texture = new Texture("foxy/animation/jump/foxy-jump_"+i+".png");
-				Animation_pers_jump[i]=new TextureRegion(texture);
-
-
-			}
-		}
-		for(int i=0;i<Animation_pers_run.length;i++){
-			if(i<10){
-				texture = new Texture("foxy/animation/run/foxy-run_0"+i+".png");
-				Animation_pers_run[i]=new TextureRegion(texture);
-
-			}else {
-				texture = new Texture("foxy/animation/run/foxy-run_"+i+".png");
-				Animation_pers_run[i]=new TextureRegion(texture);
-
-
-			}
-		}
-		texture.dispose();
-	}
+//	private void TextureAtlas(){
+//		Animation_pers_blaster_shoot=new TextureRegion[8];
+//		Animation_pers_hurt=new TextureRegion[10];
+//		Animation_pers_idle=new TextureRegion[14];
+//		Animation_pers_jump=new TextureRegion[21];
+//		Animation_pers_run=new TextureRegion[14];
+//		for(int i=0;i<Animation_pers_blaster_shoot.length;i++){
+//			texture = new Texture("foxy/animation/blaster shoot/foxy-blaster shoot_"+i+".png");
+//			Animation_pers_blaster_shoot[i]=new TextureRegion(texture);
+//
+//		}
+//		for(int i=0;i<Animation_pers_hurt.length;i++){
+//			if(i<10){
+//				texture = new Texture("foxy/animation/hurt/foxy-hurt_0"+i+".png");
+//				Animation_pers_hurt[i]=new TextureRegion(texture);
+//
+//			}else {
+//				texture = new Texture("foxy/animation/hurt/foxy-hurt_"+i+".png");
+//				Animation_pers_hurt[i]=new TextureRegion(texture);
+//
+//
+//			}
+//		}
+//		for(int i=0;i<Animation_pers_idle.length;i++){
+//			if(i<10){
+//				texture = new Texture("foxy/animation/idle/foxy-idle_0"+i+".png");
+//				Animation_pers_idle[i]=new TextureRegion(texture);
+//
+//			}else {
+//				texture = new Texture("foxy/animation/idle/foxy-idle_"+i+".png");
+//				Animation_pers_idle[i]=new TextureRegion(texture);
+//
+//
+//			}
+//		}
+//		for(int i=0;i<Animation_pers_jump.length;i++){
+//			if(i<10){
+//				texture = new Texture("foxy/animation/jump/foxy-jump_0"+i+".png");
+//				Animation_pers_jump[i]=new TextureRegion(texture);
+//
+//			}else {
+//				texture = new Texture("foxy/animation/jump/foxy-jump_"+i+".png");
+//				Animation_pers_jump[i]=new TextureRegion(texture);
+//
+//
+//			}
+//		}
+//		for(int i=0;i<Animation_pers_run.length;i++){
+//			if(i<10){
+//				texture = new Texture("foxy/animation/run/foxy-run_0"+i+".png");
+//				Animation_pers_run[i]=new TextureRegion(texture);
+//
+//			}else {
+//				texture = new Texture("foxy/animation/run/foxy-run_"+i+".png");
+//				Animation_pers_run[i]=new TextureRegion(texture);
+//
+//
+//			}
+//		}
+//		texture.dispose();
+//	}
 
 	private void boot(){
 	final long splash_start_time = System.currentTimeMillis();
@@ -154,7 +153,7 @@ public class MyGdxGame extends Game {
 			Gdx.app.postRunnable(new Runnable() {
 				@Override
 				public void run() {
-					TextureAtlas();
+					//	TextureAtlas();.
 
 					long splash_elapsed_time = System.currentTimeMillis() - splash_start_time;
 					if (splash_elapsed_time < MyGdxGame.SPLASH_MINIMUM_MILLIS) {
@@ -167,6 +166,7 @@ public class MyGdxGame extends Game {
 								}, (float)(MyGdxGame.SPLASH_MINIMUM_MILLIS - splash_elapsed_time) / 1000f);
 					} else {
 						menu();
+
 					}
 				}
 			});

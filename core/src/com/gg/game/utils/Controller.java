@@ -254,6 +254,7 @@ public class Controller {
         menu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
                 MainGame.backtomenu();
                 super.clicked(event, x, y);
             }

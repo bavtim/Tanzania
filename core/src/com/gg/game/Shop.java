@@ -89,10 +89,13 @@ public class Shop implements Screen {
     @Override
     public void hide() {
 
+        dispose();
+
     }
 
     @Override
     public void dispose() {
+
         stage.dispose();
     }
 
@@ -172,7 +175,7 @@ public class Shop implements Screen {
                 if (MyGdxGame.prefs.getBoolean("sound"))
                     menu.tab1.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
                 if (exitflag) {
-                    menu.setScreen(MyGdxGame.ScreenMenu);
+                    menu();
 
                 } else {
                     exitflag = true;
@@ -206,5 +209,8 @@ public class Shop implements Screen {
         stage.addActor(btn);
     }
 
+    private void menu() {
+        menu.setScreen(MyGdxGame.ScreenMenu);
+    }
 
 }

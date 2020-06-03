@@ -13,12 +13,12 @@ public class Constants {
     public static final float Speed_animation_x = 15f;//скорость анимации по оси х
     public static final float Speed_animation_y = 13f;//скорость анимации по оси у
     //коррекция анимации прыжка по осям
-    public static final short[] Animation_jump_correction_y = new short[]{165, 165, 165, 165, 165, 165, 140, 115, 80, 35, 35, 35, 35, 120, 180, 180, 180, 180, 180, 165, 165};
-    public static final short[] Animation_jump_correction_x = new short[]{325, 345, 400, 425, 450, 400, 380, 290, 290, 210, 230, 285, 320, 320, 340, 400, 400, 380, 350, 320, 320};
+    public static final short[] Animation_jump_correction_y = new short[]{41, 41, 41, 41, 41, 41, 35, 29, 20, 9, 9, 9, 9, 30, 45, 45, 45, 45, 45, 41, 41};
+    public static final short[] Animation_jump_correction_x = new short[]{81, 86, 100, 106, 112, 100, 95, 72, 72, 52, 57, 71, 80, 80, 85, 100, 100, 95, 87, 80, 80};
 
     //характеристики тел типа "collision-earth" : имя, плотность, трение , прыгучесть
     public static final String TM_earth_collision = "collision-earth";
-    public static final float TM_earth_density = 0f;
+    public static final float TM_earth_density = 1f;
     public static final float TM_earth_friction = 1f;
     public static final float TM_earth_restitution = 0f;
     //характеристики тел типа "collision-wall" : имя, плотность, трение , прыгучесть
@@ -46,12 +46,12 @@ public class Constants {
     //характеристики тел типа "playerfoot" : имя, плотность, трение , прыгучесть
     public static final String TM_player_foot = "playerfoot";
     public static final float TM_player_foot_density = 0.3f;
-    public static final float TM_player_foot_friction = 0.0f;
+    public static final float TM_player_foot_friction = 0.6f;
     public static final float TM_player_foot_restitution = 0f;
     //характеристики тел типа "playerbody" : имя, плотность, трение , прыгучесть
     public static final String TM_player_body = "playerbody";
     public static final float TM_player_body_density = 0.3f;
-    public static final float TM_player_body_friction = 0.6f;
+    public static final float TM_player_body_friction = 0.3f;
     public static final float TM_player_body_restitution = 0f;
     //характеристики тел типа "point" : имя
     public static final String TM_checkpoint = "point";
