@@ -107,7 +107,6 @@ public class MainGame implements Screen {
     private Sprite headersprite;
     public MainGame(MyGdxGame game) {
         MainGame.game = game;
-
         backgroundsprite = new Sprite(new Texture("rating/bg.png"));
         listsprite = new Sprite(new Texture("rating/table.png"));
         headersprite = new Sprite(new Texture("pause/header.png"));
