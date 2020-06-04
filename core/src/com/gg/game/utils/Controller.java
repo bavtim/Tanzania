@@ -244,7 +244,7 @@ public class Controller {
                 super.clicked(event, x, y);
             }
         });
-        menu.addListener(new ClickListener() {
+        restart.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 MainGame.restart();

@@ -336,7 +336,7 @@ public class MainGame implements Screen {
     public static void backtomenu() {
 
         game.setScreen(MyGdxGame.ScreenMenu);
-        game.dispose();
+        // game.dispose();
     }
 
     @Override
@@ -1024,48 +1024,8 @@ public class MainGame implements Screen {
 
     }
 
-    private void enemydraw() {
-
-
-        if (enemy.getLinearVelocity().x > 0) {
-
-            enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
-            animation_enemy_x_stand = 0;
-            animation_enemy_x_right = 0;
-            animation_enemy_x_left += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
-            if (animation_enemy_x_left > Animation_enemyork1_walk.length - 1)
-                animation_enemy_x_left = 0f;
-
-            enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_left], 0, 0, 1619, 1197);
-            enemysprite.setFlip(false, false);
-
-            enemysprite.draw(MyGdxGame.batch);
-        }
-        if (enemy.getLinearVelocity().x < 0) {
-            enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
-            animation_enemy_x_stand = 0;
-            animation_enemy_x_left = 0;
-            animation_enemy_x_right += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
-            if (animation_enemy_x_right > Animation_enemyork1_walk.length - 1)
-                animation_enemy_x_right = 0f;
-
-            enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_right], 0, 0, 1619, 1197);
-            enemysprite.setFlip(true, false);
-            enemysprite.draw(MyGdxGame.batch);
-        }
-        if (enemy.getLinearVelocity().x == 0) {
-            enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
-            animation_enemy_x_right = 0;
-            animation_enemy_x_left = 0;
-            animation_enemy_x_stand += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
-            if (animation_enemy_x_stand > Animation_enemyork1_idle.length - 1)
-                animation_enemy_x_stand = 0f;
-
-            enemysprite.setRegion(Animation_enemyork1_idle[(int) animation_enemy_x_stand], 0, 0, 1619, 1197);
-            enemysprite.setFlip(true, false);
-            enemysprite.draw(MyGdxGame.batch);
-        }
-
+    public static void restart() {
+        game.setScreen(new MainGame(game));
     }
 
     private void menumode() {
@@ -1168,7 +1128,49 @@ public class MainGame implements Screen {
         }
 
     }
-    public static void restart() {
-        // game.setScreen( new MainGame(game));
+
+    private void enemydraw() {
+
+
+        if (enemy.getLinearVelocity().x > 0) {
+
+            enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
+            animation_enemy_x_stand = 0;
+            animation_enemy_x_right = 0;
+            animation_enemy_x_left += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
+            if (animation_enemy_x_left > Animation_enemyork1_walk.length - 1)
+                animation_enemy_x_left = 0f;
+
+            enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_left], 0, 0, 324, 240);
+            enemysprite.setFlip(false, false);
+
+            enemysprite.draw(MyGdxGame.batch);
+        }
+        if (enemy.getLinearVelocity().x < 0) {
+            enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
+            animation_enemy_x_stand = 0;
+            animation_enemy_x_left = 0;
+            animation_enemy_x_right += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
+            if (animation_enemy_x_right > Animation_enemyork1_walk.length - 1)
+                animation_enemy_x_right = 0f;
+
+            enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_right], 0, 0, 324, 240);
+            enemysprite.setFlip(true, false);
+            enemysprite.draw(MyGdxGame.batch);
+        }
+        if (enemy.getLinearVelocity().x == 0) {
+            enemysprite.setPosition(enemy.getPosition().x - 4, enemy.getPosition().y - 4 - 0.5f);
+            animation_enemy_x_right = 0;
+            animation_enemy_x_left = 0;
+            animation_enemy_x_stand += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
+            if (animation_enemy_x_stand > Animation_enemyork1_idle.length - 1)
+                animation_enemy_x_stand = 0f;
+
+            enemysprite.setRegion(Animation_enemyork1_idle[(int) animation_enemy_x_stand], 0, 0, Animation_enemyork1_idle[(int) animation_enemy_x_stand].getRegionWidth(), Animation_enemyork1_idle[(int) animation_enemy_x_stand].getRegionHeight());
+            enemysprite.setFlip(true, false);
+            enemysprite.draw(MyGdxGame.batch);
+
+        }
+
     }
 }
