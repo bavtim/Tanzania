@@ -219,39 +219,39 @@ public class Settings implements Screen {
 
             }
         });
-//        vibration.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                if(menu.prefs.getBoolean("sound"))
-//                    menu.tab2.play(menu.prefs.getInteger("volume",10)/10f);
-//                if(menu.prefs.getBoolean("vibration", true)){
-//                    menu.prefs.putBoolean("vibration", false);
-//                    vibration.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("settings/95.png"))));
-//                }else {
-//                    menu.prefs.putBoolean("vibration", true);
-//                    vibration.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("settings/96.png"))));
-//                }
-//                menu.prefs.flush();
-//                super.clicked(event, x, y);
-//
-//            }
-//        });
-//        notification.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                if(menu.prefs.getBoolean("sound"))
-//                    menu.tab2.play(menu.prefs.getInteger("volume",10)/10f);
-//                if(menu.prefs.getBoolean("notification", true)){
-//                    menu.prefs.putBoolean("notification", false);
-//                    notification.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("settings/95.png"))));
-//                }else {
-//                    menu.prefs.putBoolean("notification", true);
-//                    notification.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("settings/96.png"))));
-//                }
-//                super.clicked(event, x, y);
-//                menu.prefs.flush();
-//            }
-//        });
+        vibration.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (MyGdxGame.prefs.getBoolean("sound"))
+                    menu.tab2.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
+                if (MyGdxGame.prefs.getBoolean("vibration", true)) {
+                    MyGdxGame.prefs.putBoolean("vibration", false);
+                    vibration.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("settings/95.png"))));
+                } else {
+                    MyGdxGame.prefs.putBoolean("vibration", true);
+                    vibration.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("settings/96.png"))));
+                }
+                MyGdxGame.prefs.flush();
+                super.clicked(event, x, y);
+
+            }
+        });
+        notification.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (MyGdxGame.prefs.getBoolean("sound"))
+                    menu.tab2.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
+                if (MyGdxGame.prefs.getBoolean("notification", true)) {
+                    MyGdxGame.prefs.putBoolean("notification", false);
+                    notification.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("settings/95.png"))));
+                } else {
+                    MyGdxGame.prefs.putBoolean("notification", true);
+                    notification.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("settings/96.png"))));
+                }
+                super.clicked(event, x, y);
+                MyGdxGame.prefs.flush();
+            }
+        });
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

@@ -1,7 +1,5 @@
 package com.gg.game.desktop;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.gg.game.MyGdxGame;
@@ -14,9 +12,10 @@ public class DesktopLauncher {
 		config.backgroundFPS = 60;
 		config.width = 1067;
 		config.height =480;
-//		config.width =1280;
-//		config.height =720;
+        MyGdxGame game = new MyGdxGame();
+        AdapterDesktop adapter = new AdapterDesktop();
 
-		new LwjglApplication( new MyGdxGame(), config);
+        game.setNotificationHandler(adapter);
+        new LwjglApplication(game, config);
 	}
 }

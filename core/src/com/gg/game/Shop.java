@@ -14,7 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+
 public class Shop implements Screen {
+
     private Stage stage;
     private MyGdxGame menu;
     private boolean exitflag = true;
@@ -52,6 +54,8 @@ public class Shop implements Screen {
 
     @Override
     public void render(float delta) {
+
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
@@ -114,6 +118,8 @@ public class Shop implements Screen {
         shop1btn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (MyGdxGame.prefs.getBoolean("notification"))
+                    menu.notificationHandler.showNotification("Тук-тук, у нас есть кое-что для вас", "Вы отключили рекламу");
                 if (MyGdxGame.prefs.getBoolean("sound"))
                     menu.tab2.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
                 shop1.setVisible(false);
@@ -140,12 +146,16 @@ public class Shop implements Screen {
                 shop2btn.setVisible(false);
                 shop3btn.setVisible(false);
                 exitflag = false;
-                MyGdxGame.prefs.putInteger("Countstar", MyGdxGame.prefs.getInteger("Countstar", 0) + 1);
-
-                MyGdxGame.prefs.getInteger("Countstar", 0);
-                strtemp = "Вы получили 1 звезду!\nВаш счет равен:" + MyGdxGame.prefs.getInteger("Countstar", 0);
                 MyGdxGame.prefs.flush();
+                MyGdxGame.prefs.putInteger("Countstar", MyGdxGame.prefs.getInteger("Countstar", 0) + 1);
+                MyGdxGame.prefs.flush();
+
+                strtemp = "Вы получили 1 звезду!\nВаш счет равен:" + MyGdxGame.prefs.getInteger("Countstar", 0);
+
                 glyphLayout.setText(menu.font, strtemp);
+                if (MyGdxGame.prefs.getBoolean("notification"))
+                    menu.notificationHandler.showNotification("Тук-тук,Вы получили 1 звезду", "Ваш счет: " + MyGdxGame.prefs.getInteger("Countstar", 0));
+
                 super.clicked(event, x, y);
             }
         });
@@ -161,11 +171,14 @@ public class Shop implements Screen {
                 shop2btn.setVisible(false);
                 shop3btn.setVisible(false);
                 exitflag = false;
+                MyGdxGame.prefs.flush();
                 MyGdxGame.prefs.putInteger("Countstar", MyGdxGame.prefs.getInteger("Countstar", 0) + 5);
-
-                MyGdxGame.prefs.getInteger("Countstar", 0);
+                MyGdxGame.prefs.flush();
                 strtemp = "Вы получили 5 звезд!\nВаш счет равен:" + MyGdxGame.prefs.getInteger("Countstar", 0);
                 glyphLayout.setText(menu.font, strtemp);
+                if (MyGdxGame.prefs.getBoolean("notification"))
+                    menu.notificationHandler.showNotification("Тук-тук,Вы получили 5 звезд", "Ваш счет: " + MyGdxGame.prefs.getInteger("Countstar", 0));
+
                 super.clicked(event, x, y);
             }
         });

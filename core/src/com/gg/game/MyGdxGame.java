@@ -13,10 +13,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.gg.game.utils.NotificationHandler;
 
 public class MyGdxGame extends Game {
-
-
+	public NotificationHandler notificationHandler;
 	public static Screen ScreenMenu;//экран загрузки
 	public static Screen ScreenMenuLevelSelect;//экран выбора уровня
 	public static SpriteBatch batch;//холст
@@ -40,7 +40,7 @@ public class MyGdxGame extends Game {
 	private Texture texture;//временная текстура для заполнения массива текстур для анимации персонажей
 
 	public void create() {
-		System.out.println("Подключение");
+
 
 		//параметры запуска
 		Gdx.graphics.setResizable(false);
@@ -67,10 +67,9 @@ public class MyGdxGame extends Game {
 		screen();
 		//переход на экран загрузки игры
 		setScreen(new Bootscreen());
-		//запуск ассинхронного потока для подгрузки меню
-		//boot();
-		//TextureAtlas();
-		menu();
+
+		setScreen(ScreenMenu);
+
 	}
 
 	public void render() {
@@ -84,16 +83,16 @@ public class MyGdxGame extends Game {
 	}
 
 
-public  void menu(){
-	setScreen(ScreenMenu);
-}
-public void screen(){
+	public void screen(){
 
 	ScreenMenu = new Menu(this);
 	ScreenMenuLevelSelect= new MenuLevelSelect(this);
 
 	}
 
+	public void setNotificationHandler(NotificationHandler handler) {
+		this.notificationHandler = handler;
+	}
 
 
 }

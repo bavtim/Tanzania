@@ -89,3 +89,8 @@ task run(type: Exec) {
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.gg.game/com.gg.game.AndroidLauncher'
 }
 
+dependencies {
+
+    //noinspection GradleCompatible
+    implementation "com.android.support:support-compat:28.0.0"
+}
