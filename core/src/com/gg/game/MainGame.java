@@ -1,5 +1,6 @@
 package com.gg.game;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -7,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -35,16 +35,10 @@ import com.gg.game.utils.TiledObjectUtil;
 
 public class MainGame implements Screen {
 
-    public static TextureRegion[] Animation_pers_blaster_shoot;
-    public static TextureRegion[] Animation_pers_hurt;
-    public static TextureRegion[] Animation_pers_idle;
-    public static TextureRegion[] Animation_pers_jump;
-    public static TextureRegion[] Animation_pers_run;
+
 
     private static final float STEP_TIME = 1f / 60f;
-    private static TextureRegion[] Animation_enemyork1_walk;
-    private static TextureRegion[] Animation_enemyork1_hurt;
-    private static TextureRegion[] Animation_enemyork1_idle;
+
     private static float positionx = 10f, positiony = 10f;
     private static float positioncheckx = 10f, positionchecky = 10f;
     private static boolean incheak = false;
@@ -115,7 +109,7 @@ public class MainGame implements Screen {
     private Sprite headersprite;
     public MainGame(MyGdxGame game) {
         MainGame.game = game;
-        TextureAtlas();
+
         backgroundsprite = new Sprite(new Texture("rating/bg.png"));
         listsprite = new Sprite(new Texture("rating/table.png"));
         headersprite = new Sprite(new Texture("pause/header.png"));
@@ -128,7 +122,7 @@ public class MainGame implements Screen {
         headersprite.setPosition(Gdx.graphics.getWidth() / 2f / Constants.PPM * 1.25f, Gdx.graphics.getHeight() / Constants.PPM * 1.5f + headersprite.getHeight() / Constants.PPM);
 
         bullet = new Texture("Tilemap/bullet.png");
-        dim = new Texture("Tilemap/dim.png");
+
         box = new Array<>();
         world = new World(new Vector2(0, -20), true);
         cl = new B2dContactListener();
@@ -141,7 +135,7 @@ public class MainGame implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1f / Constants.PPM);
         ParseTileMap();
         spawn();
-        sprite = new Sprite(Animation_pers_run[12], 300, 150, 525, 660);
+        sprite = new Sprite(Levelboot.Animation_pers_run[12], 300, 150, 525, 660);
         sprite.setPosition(Gdx.graphics.getWidth() / 2f - sprite.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2f);
         controller = new Controller();
@@ -155,8 +149,8 @@ public class MainGame implements Screen {
         flower = new int[]{4};
 
         parallax();
-        animation_pers_x_shoot = Animation_pers_blaster_shoot.length;
-        init_enemy();
+        animation_pers_x_shoot = Levelboot.Animation_pers_blaster_shoot.length;
+
         enemysprite = new Sprite();
         enemysprite.setSize(8, 8);
 
@@ -336,7 +330,7 @@ public class MainGame implements Screen {
     public static void backtomenu() {
 
         game.setScreen(MyGdxGame.ScreenMenu);
-        // game.dispose();
+
     }
 
     @Override
@@ -344,37 +338,8 @@ public class MainGame implements Screen {
         dispose();
     }
 
-    @Override
-    public void dispose() {
-        System.out.println("DISPOSE");
-    controller.dispose();
-        map.dispose();
-        world.dispose();
-        rend.dispose();
-        stagebg.dispose();
-        stagef.dispose();
-        boxsprite.dispose();
-        portaltexture.dispose();
-        bullet.dispose();
-        dim.dispose();
-        for (int i = 0; i < Animation_pers_blaster_shoot.length; i++)
-            Animation_pers_blaster_shoot[i].getTexture().dispose();
-        for (int i = 0; i < Animation_pers_hurt.length; i++)
-            Animation_pers_hurt[i].getTexture().dispose();
-        for (int i = 0; i < Animation_pers_idle.length; i++)
-            Animation_pers_idle[i].getTexture().dispose();
-        for (int i = 0; i < Animation_pers_jump.length; i++)
-            Animation_pers_jump[i].getTexture().dispose();
-        for (int i = 0; i < Animation_pers_run.length; i++)
-            Animation_pers_run[i].getTexture().dispose();
-        for (int i = 0; i < Animation_enemyork1_walk.length; i++)
-            Animation_enemyork1_walk[i].getTexture().dispose();
-        for (int i = 0; i < Animation_enemyork1_hurt.length; i++)
-            Animation_enemyork1_hurt[i].getTexture().dispose();
-        for (int i = 0; i < Animation_enemyork1_idle.length; i++)
-            Animation_enemyork1_idle[i].getTexture().dispose();
-
-
+    public static void restart() {
+        game.setScreen(new Levelboot(game));
     }
 
     private void portal() {
@@ -491,57 +456,37 @@ public class MainGame implements Screen {
 
     }
 
-    private void Draw() {
-        if (init) {
-            if (!cl.playerCanJump()) {
-                animation_pers_y += Constants.Speed_animation_y * Gdx.graphics.getDeltaTime();
-                if (animation_pers_y > Animation_pers_jump.length - 1)
-                    animation_pers_y = Animation_pers_jump.length - 1;
+    @Override
+    public void dispose() {
+        System.out.println("DISPOSE");
+        controller.dispose();
+        map.dispose();
+        world.dispose();
+        rend.dispose();
+        stagebg.dispose();
+        stagef.dispose();
+        boxsprite.dispose();
+        portaltexture.dispose();
+        bullet.dispose();
 
-                sprite.setRegion(Animation_pers_jump[(int) animation_pers_y], Constants.Animation_jump_correction_x[(int) animation_pers_y], Constants.Animation_jump_correction_y[(int) animation_pers_y], 145, 160);
+        for (int i = 0; i < Levelboot.Animation_pers_blaster_shoot.length; i++)
+            Levelboot.Animation_pers_blaster_shoot[i].getTexture().dispose();
+        for (int i = 0; i < Levelboot.Animation_pers_hurt.length; i++)
+            Levelboot.Animation_pers_hurt[i].getTexture().dispose();
+        for (int i = 0; i < Levelboot.Animation_pers_idle.length; i++)
+            Levelboot.Animation_pers_idle[i].getTexture().dispose();
+        for (int i = 0; i < Levelboot.Animation_pers_jump.length; i++)
+            Levelboot.Animation_pers_jump[i].getTexture().dispose();
+        for (int i = 0; i < Levelboot.Animation_pers_run.length; i++)
+            Levelboot.Animation_pers_run[i].getTexture().dispose();
+        for (int i = 0; i < Levelboot.Animation_enemyork1_walk.length; i++)
+            Levelboot.Animation_enemyork1_walk[i].getTexture().dispose();
+        for (int i = 0; i < Levelboot.Animation_enemyork1_hurt.length; i++)
+            Levelboot.Animation_enemyork1_hurt[i].getTexture().dispose();
+        for (int i = 0; i < Levelboot.Animation_enemyork1_idle.length; i++)
+            Levelboot.Animation_enemyork1_idle[i].getTexture().dispose();
 
-                if (direction_x > 0) {
-                    sprite.setFlip(false, false);
-                } else if (direction_x < 0) {
-                    sprite.setFlip(true, false);
-                }
-            } else {
-                animation_pers_y = 0;
 
-            }
-        } else {
-
-            init = true;
-        }
-        animation_pers_x_shoot += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime();
-        if (animation_pers_x_shoot > Animation_pers_blaster_shoot.length)
-            animation_pers_x_shoot = Animation_pers_blaster_shoot.length;
-        if (cl.playerCanJump()) {
-
-            if (animation_pers_x_shoot < Animation_pers_blaster_shoot.length - 1) {
-                sprite.setRegion(Animation_pers_blaster_shoot[(int) animation_pers_x_shoot], 75, 37, 131, 165);
-                if (direction_x > 0) {
-                    sprite.setFlip(false, false);
-                } else if (direction_x < 0) {
-                    sprite.setFlip(true, false);
-                }
-
-            }
-        }
-
-        MyGdxGame.batch.begin();
-        drawBox();
-        if (portal)
-            portal();
-        if (pers)
-            sprite.draw(MyGdxGame.batch);
-        if (flag1)
-            enemydraw();
-        if (!flag1)
-            finsih();
-
-        shotdraw();
-        MyGdxGame.batch.end();
     }
 
     private void playerJump() {
@@ -566,99 +511,57 @@ public class MainGame implements Screen {
         }
     }
 
-    private void gamepad_delta_xy() {
-        rect.setGravityScale(1);
-        if (!blockcontrol) {
-            if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || controller.isBulletPressed()) {
+    private void Draw() {
+        if (init) {
+            if (!cl.playerCanJump()) {
+                animation_pers_y += Constants.Speed_animation_y * Gdx.graphics.getDeltaTime();
+                if (animation_pers_y > Levelboot.Animation_pers_jump.length - 1)
+                    animation_pers_y = Levelboot.Animation_pers_jump.length - 1;
 
-                animation_pers_x_left = 0;
-                animation_pers_x_right = 0;
+                sprite.setRegion(Levelboot.Animation_pers_jump[(int) animation_pers_y], Constants.Animation_jump_correction_x[(int) animation_pers_y], Constants.Animation_jump_correction_y[(int) animation_pers_y], 145, 160);
 
-
-                if (timershot > 1) {
-
-
-                    animation_pers_x_shoot = 0;
-                    timershot = 0;
-
-                    if (temperflag) {
-
-                        shot();
-                    }
-
+                if (direction_x > 0) {
+                    sprite.setFlip(false, false);
+                } else if (direction_x < 0) {
+                    sprite.setFlip(true, false);
                 }
-
-
-            } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || controller.isLeftPressed()) {
-                if (Gdx.input.isKeyPressed(Input.Keys.UP) || controller.isUpPressed()) {
-                    playerJump();
-
-                }
-
-                animation_pers_x_stand = 0;
-                animation_pers_x_right = 0;
-                animation_pers_x_left += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime();
-                if (animation_pers_x_left > Animation_pers_run.length - 1)
-                    animation_pers_x_left = 0f;
-
-                sprite.setRegion(Animation_pers_run[(int) animation_pers_x_left], 75, 37, 131, 165);
-
-
-                if (direction_x > -1)
-                    direction_x--;
-                sprite.setFlip(true, false);
-                if (cl.playerCanJump()) {
-                    if (rect.getLinearVelocity().x > -Constants.Max_speed)
-                        rect.applyForceToCenter(-Constants.Force_x, 0, true);
-                } else {
-                    if (rect.getLinearVelocity().x > -Constants.Max_speed) {
-                        rect.applyForceToCenter(-Constants.Force_x / 2f, 0, true);
-                    }
-                }
-
-
-            } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || controller.isRightPressed()) {
-                if (Gdx.input.isKeyPressed(Input.Keys.UP) || controller.isUpPressed()) {
-                    playerJump();
-
-                }
-                animation_pers_x_stand = 0;
-                animation_pers_x_left = 0;
-                animation_pers_x_right += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime();
-                if (animation_pers_x_right > Animation_pers_run.length - 1)
-                    animation_pers_x_right = 0f;
-                sprite.setRegion(Animation_pers_run[(int) animation_pers_x_right], 75, 37, 131, 165);
-
-
-                if (direction_x < 1)
-                    direction_x++;
-                sprite.setFlip(false, false);
-                if (cl.playerCanJump()) {
-                    if (rect.getLinearVelocity().x < Constants.Max_speed)
-                        rect.applyForceToCenter(Constants.Force_x, 0, true);
-                } else {
-
-                    if (rect.getLinearVelocity().x < Constants.Max_speed)
-                        rect.applyForceToCenter(Constants.Force_x / 2f, 0, true);
-                }
-
-
-            } else if (Gdx.input.isKeyPressed(Input.Keys.UP) || controller.isUpPressed()) {
-                playerJump();
-
             } else {
+                animation_pers_y = 0;
 
-                if (cl.playerCanJump()) {
-                    rect.setGravityScale(50);
-                } else {
-                    rect.setGravityScale(1);
-                }
-                idle();
             }
+        } else {
 
+            init = true;
+        }
+        animation_pers_x_shoot += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime();
+        if (animation_pers_x_shoot > Levelboot.Animation_pers_blaster_shoot.length)
+            animation_pers_x_shoot = Levelboot.Animation_pers_blaster_shoot.length;
+        if (cl.playerCanJump()) {
+
+            if (animation_pers_x_shoot < Levelboot.Animation_pers_blaster_shoot.length - 1) {
+                sprite.setRegion(Levelboot.Animation_pers_blaster_shoot[(int) animation_pers_x_shoot], 75, 37, 131, 165);
+                if (direction_x > 0) {
+                    sprite.setFlip(false, false);
+                } else if (direction_x < 0) {
+                    sprite.setFlip(true, false);
+                }
+
+            }
         }
 
+        MyGdxGame.batch.begin();
+        drawBox();
+        if (portal)
+            portal();
+        if (pers)
+            sprite.draw(MyGdxGame.batch);
+        if (flag1)
+            enemydraw();
+        if (!flag1)
+            finsih();
 
+        shotdraw();
+        MyGdxGame.batch.end();
     }
 
     private void playerDead() {
@@ -964,21 +867,6 @@ public class MainGame implements Screen {
         body.setGravityScale(0);
     }
 
-    private void init_enemy() {
-        Animation_enemyork1_hurt = new TextureRegion[7];
-        Animation_enemyork1_idle = new TextureRegion[7];
-        Animation_enemyork1_walk = new TextureRegion[7];
-        for (int i = 0; i < Animation_enemyork1_hurt.length; i++) {
-            Animation_enemyork1_hurt[i] = new TextureRegion(new Texture("enemy/ork1/HURT/HURT_00" + i + ".png"));
-        }
-        for (int i = 0; i < Animation_enemyork1_idle.length; i++) {
-            Animation_enemyork1_idle[i] = new TextureRegion(new Texture("enemy/ork1/IDLE/IDLE_00" + i + ".png"));
-        }
-        for (int i = 0; i < Animation_enemyork1_walk.length; i++) {
-            Animation_enemyork1_walk[i] = new TextureRegion(new Texture("enemy/ork1/WALK/WALK_00" + i + ".png"));
-        }
-
-    }
 
     private void createenemy() {
 
@@ -1024,8 +912,99 @@ public class MainGame implements Screen {
 
     }
 
-    public static void restart() {
-        game.setScreen(new MainGame(game));
+    private void gamepad_delta_xy() {
+        rect.setGravityScale(1);
+        if (!blockcontrol) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || controller.isBulletPressed()) {
+
+                animation_pers_x_left = 0;
+                animation_pers_x_right = 0;
+
+
+                if (timershot > 1) {
+
+
+                    animation_pers_x_shoot = 0;
+                    timershot = 0;
+
+                    if (temperflag) {
+
+                        shot();
+                    }
+
+                }
+
+
+            } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || controller.isLeftPressed()) {
+                if (Gdx.input.isKeyPressed(Input.Keys.UP) || controller.isUpPressed()) {
+                    playerJump();
+
+                }
+
+                animation_pers_x_stand = 0;
+                animation_pers_x_right = 0;
+                animation_pers_x_left += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime();
+                if (animation_pers_x_left > Levelboot.Animation_pers_run.length - 1)
+                    animation_pers_x_left = 0f;
+
+                sprite.setRegion(Levelboot.Animation_pers_run[(int) animation_pers_x_left], 75, 37, 131, 165);
+
+
+                if (direction_x > -1)
+                    direction_x--;
+                sprite.setFlip(true, false);
+                if (cl.playerCanJump()) {
+                    if (rect.getLinearVelocity().x > -Constants.Max_speed)
+                        rect.applyForceToCenter(-Constants.Force_x, 0, true);
+                } else {
+                    if (rect.getLinearVelocity().x > -Constants.Max_speed) {
+                        rect.applyForceToCenter(-Constants.Force_x / 2f, 0, true);
+                    }
+                }
+
+
+            } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || controller.isRightPressed()) {
+                if (Gdx.input.isKeyPressed(Input.Keys.UP) || controller.isUpPressed()) {
+                    playerJump();
+
+                }
+                animation_pers_x_stand = 0;
+                animation_pers_x_left = 0;
+                animation_pers_x_right += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime();
+                if (animation_pers_x_right > Levelboot.Animation_pers_run.length - 1)
+                    animation_pers_x_right = 0f;
+                sprite.setRegion(Levelboot.Animation_pers_run[(int) animation_pers_x_right], 75, 37, 131, 165);
+
+
+                if (direction_x < 1)
+                    direction_x++;
+                sprite.setFlip(false, false);
+                if (cl.playerCanJump()) {
+                    if (rect.getLinearVelocity().x < Constants.Max_speed)
+                        rect.applyForceToCenter(Constants.Force_x, 0, true);
+                } else {
+
+                    if (rect.getLinearVelocity().x < Constants.Max_speed)
+                        rect.applyForceToCenter(Constants.Force_x / 2f, 0, true);
+                }
+
+
+            } else if (Gdx.input.isKeyPressed(Input.Keys.UP) || controller.isUpPressed()) {
+                playerJump();
+
+            } else {
+
+                if (cl.playerCanJump()) {
+                    rect.setGravityScale(50);
+                } else {
+                    rect.setGravityScale(1);
+                }
+                idle();
+            }
+
+        }
+
+
     }
 
     private void menumode() {
@@ -1039,6 +1018,8 @@ public class MainGame implements Screen {
             menumodeflag = false;
             blockanimwater = true;
 //            freeze = true;
+        } else {
+            blockanimwater = false;
         }
 /*        if (freeze) {
 //            Array<Body> bodies = new Array<>();
@@ -1058,76 +1039,16 @@ public class MainGame implements Screen {
         animation_pers_x_left = 0;
         animation_pers_x_right = 0;
         animation_pers_x_stand += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime();
-        if (animation_pers_x_stand > Animation_pers_idle.length - 1)
+        if (animation_pers_x_stand > Levelboot.Animation_pers_idle.length - 1)
             animation_pers_x_stand = 0f;
-        sprite.setRegion(Animation_pers_idle[(int) animation_pers_x_stand], 75, 37, 131, 165);
+        sprite.setRegion(Levelboot.Animation_pers_idle[(int) animation_pers_x_stand], 75, 37, 131, 165);
         if (direction_x == 1)
             sprite.setFlip(false, false);
         if (direction_x == -1)
             sprite.setFlip(true, false);
     }
 
-    private void TextureAtlas() {
-        Animation_pers_blaster_shoot = new TextureRegion[8];
-        Animation_pers_hurt = new TextureRegion[10];
-        Animation_pers_idle = new TextureRegion[14];
-        Animation_pers_jump = new TextureRegion[21];
-        Animation_pers_run = new TextureRegion[14];
-        for (int i = 0; i < Animation_pers_blaster_shoot.length; i++) {
 
-            Animation_pers_blaster_shoot[i] = new TextureRegion(new Texture("foxy/animation/blaster shoot/foxy-blaster shoot_" + i + ".png"));
-
-        }
-        for (int i = 0; i < Animation_pers_hurt.length; i++) {
-            if (i < 10) {
-
-                Animation_pers_hurt[i] = new TextureRegion(new Texture("foxy/animation/hurt/foxy-hurt_0" + i + ".png"));
-
-            } else {
-
-                Animation_pers_hurt[i] = new TextureRegion(new Texture("foxy/animation/hurt/foxy-hurt_" + i + ".png"));
-
-
-            }
-        }
-        for (int i = 0; i < Animation_pers_idle.length; i++) {
-            if (i < 10) {
-
-                Animation_pers_idle[i] = new TextureRegion(new Texture("foxy/animation/idle/foxy-idle_0" + i + ".png"));
-
-            } else {
-
-                Animation_pers_idle[i] = new TextureRegion(new Texture("foxy/animation/idle/foxy-idle_" + i + ".png"));
-
-
-            }
-        }
-        for (int i = 0; i < Animation_pers_jump.length; i++) {
-            if (i < 10) {
-
-                Animation_pers_jump[i] = new TextureRegion(new Texture("foxy/animation/jump/foxy-jump_0" + i + ".png"));
-
-            } else {
-
-                Animation_pers_jump[i] = new TextureRegion(new Texture("foxy/animation/jump/foxy-jump_" + i + ".png"));
-
-
-            }
-        }
-        for (int i = 0; i < Animation_pers_run.length; i++) {
-            if (i < 10) {
-
-                Animation_pers_run[i] = new TextureRegion(new Texture("foxy/animation/run/foxy-run_0" + i + ".png"));
-
-            } else {
-
-                Animation_pers_run[i] = new TextureRegion(new Texture("foxy/animation/run/foxy-run_" + i + ".png"));
-
-
-            }
-        }
-
-    }
 
     private void enemydraw() {
 
@@ -1138,10 +1059,10 @@ public class MainGame implements Screen {
             animation_enemy_x_stand = 0;
             animation_enemy_x_right = 0;
             animation_enemy_x_left += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
-            if (animation_enemy_x_left > Animation_enemyork1_walk.length - 1)
+            if (animation_enemy_x_left > Levelboot.Animation_enemyork1_walk.length - 1)
                 animation_enemy_x_left = 0f;
 
-            enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_left], 0, 0, 324, 240);
+            enemysprite.setRegion(Levelboot.Animation_enemyork1_walk[(int) animation_enemy_x_left], 0, 0, 324, 240);
             enemysprite.setFlip(false, false);
 
             enemysprite.draw(MyGdxGame.batch);
@@ -1151,10 +1072,10 @@ public class MainGame implements Screen {
             animation_enemy_x_stand = 0;
             animation_enemy_x_left = 0;
             animation_enemy_x_right += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
-            if (animation_enemy_x_right > Animation_enemyork1_walk.length - 1)
+            if (animation_enemy_x_right > Levelboot.Animation_enemyork1_walk.length - 1)
                 animation_enemy_x_right = 0f;
 
-            enemysprite.setRegion(Animation_enemyork1_walk[(int) animation_enemy_x_right], 0, 0, 324, 240);
+            enemysprite.setRegion(Levelboot.Animation_enemyork1_walk[(int) animation_enemy_x_right], 0, 0, 324, 240);
             enemysprite.setFlip(true, false);
             enemysprite.draw(MyGdxGame.batch);
         }
@@ -1163,10 +1084,10 @@ public class MainGame implements Screen {
             animation_enemy_x_right = 0;
             animation_enemy_x_left = 0;
             animation_enemy_x_stand += Constants.Speed_animation_x * Gdx.graphics.getDeltaTime() / 2;
-            if (animation_enemy_x_stand > Animation_enemyork1_idle.length - 1)
+            if (animation_enemy_x_stand > Levelboot.Animation_enemyork1_idle.length - 1)
                 animation_enemy_x_stand = 0f;
 
-            enemysprite.setRegion(Animation_enemyork1_idle[(int) animation_enemy_x_stand], 0, 0, Animation_enemyork1_idle[(int) animation_enemy_x_stand].getRegionWidth(), Animation_enemyork1_idle[(int) animation_enemy_x_stand].getRegionHeight());
+            enemysprite.setRegion(Levelboot.Animation_enemyork1_idle[(int) animation_enemy_x_stand], 0, 0, Levelboot.Animation_enemyork1_idle[(int) animation_enemy_x_stand].getRegionWidth(), Levelboot.Animation_enemyork1_idle[(int) animation_enemy_x_stand].getRegionHeight());
             enemysprite.setFlip(true, false);
             enemysprite.draw(MyGdxGame.batch);
 

@@ -22,6 +22,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
     private Sprite headersprite;
 
     public MenuLevelSelect(MyGdxGame menuenuLevelSelect) {
+
         menu = menuenuLevelSelect;
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
         btn();
@@ -128,7 +129,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (prefs.getBoolean("sound"))
                     menu.tab2.play(prefs.getInteger("volume", 10) / 10f);
-                menu.setScreen(new MainGame(menu));
+                menu.setScreen(new Levelboot(menu));
 
                 super.clicked(event, x, y);
             }
@@ -235,4 +236,6 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
 
 
     }
+
+
 }

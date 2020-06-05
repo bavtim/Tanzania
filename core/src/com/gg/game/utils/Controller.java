@@ -32,7 +32,7 @@ public class Controller {
         listsprite = new Sprite(new Texture("pause/table.png"));
         headersprite = new Sprite(new Texture("pause/header.png"));
 
-        text.setSize(Gdx.graphics.getHeight() * 1f, Gdx.graphics.getHeight() * 0.5f);
+        text.setSize(Gdx.graphics.getHeight() * 1f * 0.8f, Gdx.graphics.getHeight() * 0.5f * 0.8f);
         headersprite.setSize(Gdx.graphics.getHeight() * 0.8f * 0.9f, Gdx.graphics.getHeight() * 0.3f);
         backgroundsprite.setSize(Gdx.graphics.getHeight() * 1.3f, Gdx.graphics.getHeight() * 0.8f);
         listsprite.setSize(Gdx.graphics.getHeight() * 0.9f * 1.3f, Gdx.graphics.getHeight() * 0.8f * 0.9f);
@@ -94,7 +94,8 @@ public class Controller {
         viewport.update(width, height);
     }
     public void dispose(){
-         stage.dispose();
+        batch.dispose();
+        stage.dispose();
     }
 
     public void createControll() {
@@ -115,7 +116,7 @@ public class Controller {
         leftImg.setSize(150, 150);
         rightImg.setSize(150, 150);
         bullet.setSize(150, 150);
-        ecs.setSize(100, 100);
+        ecs.setSize(Gdx.graphics.getWidth() / 8f, Gdx.graphics.getWidth() / 8f);
         ecs.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -235,8 +236,8 @@ public class Controller {
         final Image exit = new Image(new Texture("rating/close_2.png"));
         final Image menu = new Image(new Texture("btn/menu.png"));
         final Image restart = new Image(new Texture("btn/restart.png"));
-        menu.setSize(100, 100);
-        restart.setSize(100, 100);
+        menu.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
+        restart.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -262,16 +263,15 @@ public class Controller {
         gamepad.defaults().expand();
         gamepad.add(exit).size(Gdx.graphics.getHeight() / 8f, Gdx.graphics.getHeight() / 8f).right().top().colspan(2);
         gamepad.row();
-        gamepad.add().height(Gdx.graphics.getHeight() / 7f);
         gamepad.row();
-        gamepad.add().height(Gdx.graphics.getHeight() / 7f);
+        gamepad.add().height(Gdx.graphics.getHeight() / 5f);
         gamepad.row();
 
         gamepad.add(menu).size(menu.getWidth(), menu.getHeight()).height(Gdx.graphics.getHeight() / 5f).center();
         gamepad.add(restart).size(menu.getWidth(), menu.getHeight()).height(Gdx.graphics.getHeight() / 5f).center();
 
         gamepad.row();
-        gamepad.add().height(Gdx.graphics.getHeight() / 7f);
+        gamepad.add().height(Gdx.graphics.getHeight() / 5f);
         stage.addActor(gamepad);
 
     }

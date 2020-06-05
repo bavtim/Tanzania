@@ -88,3 +88,4 @@ task run(type: Exec) {
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.gg.game/com.gg.game.AndroidLauncher'
 }
+
