@@ -61,7 +61,7 @@ public class Constants {
     public static final String TM_bullet = "bullet";
     public static final float TM_bullet_density = 0.3f;
     public static final float TM_bullet_friction = 0f;
-    public static final float TM_bullet_restitution = 1f;
+    public static final float TM_bullet_restitution = 0f;
     //характеристики тел типа "pointenemy" : имя, плотность, трение , прыгучесть
     public static final String TM_enemy_point = "pointenemy";
     public static final float TM_enemy_density = 0.3f;

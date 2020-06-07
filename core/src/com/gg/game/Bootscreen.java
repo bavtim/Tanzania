@@ -15,7 +15,10 @@ public class Bootscreen implements Screen {
     private BitmapFont font;
     private Texture Bootscreen_IMG;
     private float deltatime;
-    Bootscreen() {
+    MyGdxGame boot;
+
+    Bootscreen(MyGdxGame boot) {
+        this.boot = boot;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class Bootscreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        deltatime = Gdx.graphics.getDeltaTime();
+        deltatime = Gdx.graphics.getDeltaTime() * 1.25f;
         if (deltatime < 1) {
             if (flag) {
                 if (timer > 0)
@@ -44,17 +47,8 @@ public class Bootscreen implements Screen {
             if (timer > 2)
                 flag = true;
             if (timer < 0) {
-                if (flag1) {
-                    timer1 -= deltatime;
-                }
-                if (!flag1) {
-                    timer1 += deltatime;
-                    if (timer1 > 2)
-                        flag1 = true;
-                }
-
-                if (timer1 < 0)
-                    timer1 = 0;
+                timer = 0;
+                boot.setScreen(MyGdxGame.ScreenMenu);
             }
 
         }

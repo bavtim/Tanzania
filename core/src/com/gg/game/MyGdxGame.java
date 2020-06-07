@@ -66,9 +66,9 @@ public class MyGdxGame extends Game {
 		//создание скринов активностей
 		screen();
 		//переход на экран загрузки игры
-		setScreen(new Bootscreen());
+        setScreen(new Bootscreen(this));
 
-		setScreen(ScreenMenu);
+
 
 	}
 

@@ -42,7 +42,7 @@ public class MainGame implements Screen {
     private static float positionx = 10f, positiony = 10f;
     private static float positioncheckx = 10f, positionchecky = 10f;
     private static boolean incheak = false;
-    private float size = 1;
+
     private float positionenemyx = 0, positionenemyy = 0;
     private Body enemy;
     private float animation_pers_x_shoot = 0;
@@ -103,13 +103,13 @@ public class MainGame implements Screen {
     private float animation_enemy_x_left = 0;
     public static boolean menumodeflag = false;
     public static boolean blockanimwater = false;
-
+    boolean exit = false;
     private Sprite backgroundsprite;
     private Sprite listsprite;
     private Sprite headersprite;
     public MainGame(MyGdxGame game) {
         MainGame.game = game;
-
+        game.music.pause();
         backgroundsprite = new Sprite(new Texture("rating/bg.png"));
         listsprite = new Sprite(new Texture("rating/table.png"));
         headersprite = new Sprite(new Texture("pause/header.png"));
@@ -165,68 +165,72 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float delta) {
+        if (exit) {
+            game.setScreen(new Win_screen(game, (byte) 1));
+        } else {
+            timerenemy += Gdx.graphics.getDeltaTime() * 2;
+            if (timer <= 1)
+                timer += Gdx.graphics.getDeltaTime();
+            if (timershot <= 1)
+                timershot += Gdx.graphics.getDeltaTime();
+            heckpoint();
+            playerDead();
+            Gdx.gl.glClearColor(1, 1, 1, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            stepWorld();
+            camera.update();
 
-        timerenemy += Gdx.graphics.getDeltaTime() * 2;
-        if (timer <= 1)
-            timer += Gdx.graphics.getDeltaTime();
-        if (timershot <= 1)
-            timershot += Gdx.graphics.getDeltaTime();
-        heckpoint();
-        playerDead();
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stepWorld();
-        camera.update();
+            gamepad_delta_xy();
+            bgparallaxdraw();
+            MyGdxGame.batch.setProjectionMatrix(camera.combined);
+            stagebg.draw();
+            renderer.setView(camera);
+            renderer.render(earth);
 
-        gamepad_delta_xy();
-        bgparallaxdraw();
-        MyGdxGame.batch.setProjectionMatrix(camera.combined);
-        stagebg.draw();
-        renderer.setView(camera);
-        renderer.render(earth);
-
-        if (incheak)
-            renderer.render(check);
-        flower();
-        stagef.draw();
-        if (MyGdxGame.prefs.getBoolean("debugmode", true))
-            rend.render(world, camera.combined);
-        Draw();
-        renderer.render(cloud);
+            if (incheak)
+                renderer.render(check);
+            flower();
+            stagef.draw();
+            if (MyGdxGame.prefs.getBoolean("debugmode", true))
+                rend.render(world, camera.combined);
+            Draw();
+            renderer.render(cloud);
 
 
-        if (controller.isEscPressed())
-            menumodeflag = true;
+            if (controller.isEscPressed())
+                menumodeflag = true;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            if (Controller.escPressed) {
-                Controller.escPressed = false;
-                controller.createControll();
-            } else {
-                Controller.escPressed = true;
-                controller.createmenu();
+            if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                if (Controller.escPressed) {
+                    Controller.escPressed = false;
+                    controller.createControll();
+                } else {
+                    Controller.escPressed = true;
+                    controller.createmenu();
+                }
+
+
             }
 
-
-        }
-
-        menumode();
-
+            menumode();
 
 
             controller.draw();
 
-        cameraposition();
-        sprite.setPosition(rect.getPosition().x - 2, rect.getPosition().y - 2);
+            cameraposition();
+            sprite.setPosition(rect.getPosition().x - 2, rect.getPosition().y - 2);
 
-        if (cl.isEnemydamage() && flag1) {
+            if (cl.isEnemydamage() && flag1) {
 
-            world.destroyBody(enemy);
-            flag1 = false;
+                world.destroyBody(enemy);
+                flag1 = false;
+
+            }
+            if (flag1)
+                moveenemy();
 
         }
-        if (flag1)
-            moveenemy();
+
 
 
     }
@@ -257,27 +261,9 @@ public class MainGame implements Screen {
                     false, false
             );
         }
-        if (rect.getPosition().x >= positionenemyx + 24) {
-            game.setScreen(new Win_screen(game, (byte) 0));
-            size += Gdx.graphics.getDeltaTime() * 7;
-            blockcontrol = true;
 
-            MyGdxGame.batch.draw(
-                    portaltexture,
-                    positionenemyx + 26,
-                    positionenemyy - 2,
-                    3,
-                    3,
-                    384 / Constants.PPM,
-                    384 / Constants.PPM,
-                    size,
-                    size,
-                    (float) Math.toDegrees(Math.abs(timeportal)),
-                    0, 0, 384, 384,
-                    false, false
+        if (timeportal / 4 > 1) {
 
-            );
-        } else if (timeportal / 4 > 1) {
             MyGdxGame.batch.draw(
                     portaltexture,
                     positionenemyx + 26,
@@ -296,7 +282,29 @@ public class MainGame implements Screen {
 
 
         }
-
+        if (rect.getPosition().x >= positionenemyx + 24) {
+            //     game.setScreen(new Win_screen(game, (byte) 0));
+            //  game.setScreen(new Shop(game));
+//            size += Gdx.graphics.getDeltaTime() * 7;
+            // blockcontrol = true;
+            System.out.println("12121212");
+            exit = true;
+//            MyGdxGame.batch.draw(
+//                    portaltexture,
+//                    positionenemyx + 26,
+//                    positionenemyy - 2,
+//                    3,
+//                    3,
+//                    384 / Constants.PPM,
+//                    384 / Constants.PPM,
+//                    size,
+//                    size,
+//                    (float) Math.toDegrees(Math.abs(timeportal)),
+//                    0, 0, 384, 384,
+//                    false, false
+//
+//            );
+        }
     }
 
     private void flower() {
@@ -854,9 +862,9 @@ public class MainGame implements Screen {
         body.setUserData(Constants.TM_bullet);
         FixtureDef fDef = new FixtureDef();
         fDef.shape = shape;
-        fDef.density = 0;
-        fDef.friction = 0;
-        fDef.restitution = 1;
+        fDef.density = Constants.TM_bullet_density;
+        fDef.friction = Constants.TM_bullet_friction;
+        fDef.restitution = Constants.TM_bullet_restitution;
 
         body.createFixture(fDef).setUserData(Constants.TM_bullet);
         body.setBullet(true);
@@ -865,6 +873,8 @@ public class MainGame implements Screen {
         if (direction_x < 0)
             body.applyForceToCenter(-1000, 0, false);
         body.setGravityScale(0);
+        if (MyGdxGame.prefs.getBoolean("vibration", true))
+            Gdx.input.vibrate(750);
     }
 
 

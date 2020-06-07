@@ -210,13 +210,14 @@ public class Controller {
         gamepad.add().width(Gdx.graphics.getWidth() / 4f);
         gamepad.add().width(Gdx.graphics.getWidth() / 4f);
         gamepad.row();
+
+        gamepad.add(upImg).colspan(2).size(upImg.getWidth(), upImg.getHeight()).left().bottom().padLeft(Gdx.graphics.getWidth() / 10f);
         gamepad.add().colspan(2);
-        gamepad.add(upImg).colspan(2).size(upImg.getWidth(), upImg.getHeight()).center().bottom();
         gamepad.row();
         gamepad.add(bullet).size(bullet.getWidth(), bullet.getHeight()).colspan(2);
 
 
-        gamepad.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight()).center();
+        gamepad.add(leftImg).size(leftImg.getWidth(), leftImg.getHeight()).right();
         gamepad.add(rightImg).size(rightImg.getWidth(), rightImg.getHeight()).center();
         gamepad.row();
 

@@ -42,7 +42,7 @@ public class AdapterAndroid implements NotificationHandler {
 
             notificationManager.notify(notificationId, builder.build());
         } else {
-            System.out.println("notification");
+
             int notifyID = 1;
             String CHANNEL_ID = "my_channel_01";
             CharSequence name = title;

@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Timer;
 
 
@@ -18,20 +21,31 @@ public class Levelboot implements Screen {
     public static TextureRegion[] Animation_enemyork1_walk;
     public static TextureRegion[] Animation_enemyork1_hurt;
     public static TextureRegion[] Animation_enemyork1_idle;
-    private static long SPLASH_MINIMUM_MILLIS = 1000L;//минимальное время для бутскрина
-
-
+    private static long SPLASH_MINIMUM_MILLIS = 3000L;//минимальное время для бутскрина
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    FreeTypeFontGenerator generator;//генератор шрифта
+    BitmapFont font;//шрифт
+    boolean flag;
+    float timer;
     private MyGdxGame menu;
     private Sprite MenuScreen;
-
+    private GlyphLayout glyphLayout;
+    private float deltatime = 0;
     public Levelboot(MyGdxGame levelboot) {
         this.menu = levelboot;
-
+        glyphLayout = new GlyphLayout();
 
         MenuScreen = new Sprite(new Texture("level_select/levelboot.png"));
-
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("ttf/segoeprb.ttf"));
+        parameter.characters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
+        parameter.size = Gdx.graphics.getHeight() / 6;
+        font = generator.generateFont(parameter);
+        generator.dispose();
+        font.setColor(0f, 0f, 0f, 0f);
         MenuScreen.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        glyphLayout.setText(font, "Загрузка...");
         bootassert();
+
     }
 
     @Override
@@ -43,11 +57,29 @@ public class Levelboot implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        deltatime = Gdx.graphics.getDeltaTime() * 1.25f;
         MyGdxGame.batch.begin();
 
         MenuScreen.draw(MyGdxGame.batch);
 
+        if (deltatime < 1) {
+            if (flag) {
+                if (timer > 0)
+                    timer -= deltatime;
+            } else {
+                timer += deltatime;
+            }
+            if (timer > 2)
+                flag = true;
+            if (timer < 0) {
+                flag = false;
+
+            }
+            System.out.println(timer);
+        }
+        font.setColor(0f, 0f, 0f, timer);
+        glyphLayout.setText(font, "Загрузка...");
+        font.draw(MyGdxGame.batch, glyphLayout, Gdx.graphics.getWidth() / 2f - glyphLayout.width / 2, Gdx.graphics.getHeight() / 2f);
         MyGdxGame.batch.end();
 
     }
@@ -75,7 +107,7 @@ public class Levelboot implements Screen {
 
     @Override
     public void dispose() {
-
+        font.dispose();
     }
 
     private void bootassert() {
