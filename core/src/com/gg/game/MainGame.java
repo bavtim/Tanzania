@@ -34,91 +34,104 @@ import com.gg.game.utils.TiledObjectUtil;
 
 
 public class MainGame implements Screen {
-
-
-
-    private static final float STEP_TIME = 1f / 60f;
-
-    private static float positionx = 10f, positiony = 10f;
-    private static float positioncheckx = 10f, positionchecky = 10f;
-    private static boolean incheak = false;
-
-    private float positionenemyx = 0, positionenemyy = 0;
-    private Body enemy;
-    private float animation_pers_x_shoot = 0;
-    private Stage stagebg;
-    private Stage stagef;
-    private Image bg2;
+    private static final float STEP_TIME = 1f / 60f;//шаг времени
+    //флаги
+    public static boolean menumodeflag = false;
+    private static float positionx = 10f, positiony = 10f;//дефолтное расположение точки спавна персонажа
+    private static float positioncheckx = 10f, positionchecky = 10f;//дефолтное расположение точки чекпоинта
+    private static boolean incheak = false;//нахождение в чеке
+    private static boolean blockanimwater = false;
+    private float positionenemyx = 0, positionenemyy = 0;//точка спавна врага
+    private Body enemy;//физ тело врага
+    private float animation_pers_x_shoot; //стартовое значение номера спрайта
+    private Stage stagebg;//сцена для параллакса(задний фон)
     private Image bg1;
     private Image f2;
     private Image f1;
-
-    private Body rect;
+    private Stage stagef;//сцена для параллакса(передний фон)
     private Body rectfoot;
+    // картинки для параллакса
+    private Image bg2;
+    //составные части ГГ
+    private Body rect;
+    //прослушка контактирующих объектов
     private B2dContactListener cl;
+    //массив тел коробок
     private Array<Body> box;
-    private OrthographicCamera camera;
-    private Table table0;
     private Table table1;
     private static MyGdxGame game;
+    //камера обзора
+    private OrthographicCamera camera;
+    //стол для параллакс эффекта
+    private Table table0;
+    //тайлмапа
     private TiledMap map;
+    //рендер тайлмапы
     private TiledMapRenderer renderer;
+    // мир тел
     private World world;
+    //дебаг рендер
     private Box2DDebugRenderer rend;
-    private Sprite sprite;
-    private float animation_pers_x_left = 0;
     private float animation_pers_x_right = 0;
     private float animation_pers_x_stand = 0;
     private float animation_pers_y = 0;
+    //cпрайт ГГ
+    private Sprite sprite;
+    //стартовый анимации
+    private float animation_pers_x_left = 0;
+    // переменная инициализации
     private boolean init = false;
+    //направление движения по х
     private byte direction_x = 0;
+    //текстура коробки
     private Texture boxsprite;
+    //cглаживание просадок фпс
     private float accumulator = 0;
+    //флаг анимации
     private boolean flag = true;
-    private float positionflowerx = 0, positionflowery = 0;
-    private int[] earth;
     private int[] cloud;
     private int[] check;
-    private byte jump = 0;
     private int[] flower;
+    //позиция цветка
+    private float positionflowerx = 0, positionflowery = 0;
+    //массивы слоев для отрисовки
+    private int[] earth;
+    //количество прыжков
+    private byte jump = 0;
+    //появление портала
     private boolean portal;
-    private boolean pers;
-    private Controller controller;
     private Viewport viewport;
     private float timeportal = 0;
     private Texture portaltexture;
     public static boolean blockcontrol;
     private boolean temp = true;
-    private float timer = 0;
+    //отрисовка  персонажа
+    private boolean pers;
     private float timershot = 2;
     private boolean unlockdoublejump = false;
-    private Texture bullet;
+    //контроллер управления+ отрисовка сцен
+    private Controller controller;
     private float timerenemy = 0;
-    private boolean flag1 = true;
+    //таймеры анимации
+    private float timer = 0;
     private boolean temperflag = true;
-    private Sprite enemysprite;
-    private float animation_enemy_x_stand = 0;
+    //текстура пули
+    private Texture bullet;
+    //флаги
+    private boolean flag1 = true;
     private float animation_enemy_x_right = 0;
     private float animation_enemy_x_left = 0;
-    public static boolean menumodeflag = false;
-    public static boolean blockanimwater = false;
-    boolean exit = false;
-    private Sprite backgroundsprite;
-    private Sprite listsprite;
-    private Sprite headersprite;
+    //спрайт врага
+    private Sprite enemysprite;
+    //стартовые анимации ГГ
+    private float animation_enemy_x_stand = 0;
+    private boolean exit = false;
+
+
+    //инициализация переменных
     public MainGame(MyGdxGame game) {
         MainGame.game = game;
         game.music.pause();
-        backgroundsprite = new Sprite(new Texture("rating/bg.png"));
-        listsprite = new Sprite(new Texture("rating/table.png"));
-        headersprite = new Sprite(new Texture("pause/header.png"));
-        headersprite.setSize(Gdx.graphics.getHeight() * 0.8f * 0.9f / Constants.PPM * 2, Gdx.graphics.getHeight() * 0.3f / Constants.PPM * 2);
-        backgroundsprite.setSize(Gdx.graphics.getHeight() / Constants.PPM * 2, Gdx.graphics.getHeight() * 0.8f / Constants.PPM * 2);
-        listsprite.setSize(Gdx.graphics.getHeight() * 0.9f / Constants.PPM * 2, Gdx.graphics.getHeight() * 0.8f * 0.9f / Constants.PPM * 2);
-
-        backgroundsprite.setPosition(Gdx.graphics.getWidth() / 2f / Constants.PPM, Gdx.graphics.getHeight() / 2f / Constants.PPM - backgroundsprite.getHeight() / 2 / Constants.PPM - Gdx.graphics.getHeight() / 10f / Constants.PPM);
-        listsprite.setPosition(Gdx.graphics.getWidth() / 2f / Constants.PPM * 1.10f, Gdx.graphics.getHeight() / 2f / Constants.PPM * 1.10f - listsprite.getHeight() / 2 / Constants.PPM - Gdx.graphics.getHeight() / 10f / Constants.PPM);
-        headersprite.setPosition(Gdx.graphics.getWidth() / 2f / Constants.PPM * 1.25f, Gdx.graphics.getHeight() / Constants.PPM * 1.5f + headersprite.getHeight() / Constants.PPM);
 
         bullet = new Texture("Tilemap/bullet.png");
 
@@ -161,7 +174,19 @@ public class MainGame implements Screen {
 
     }
 
+    //переход в главное меню
+    public static void backtomenu() {
 
+        game.setScreen(MyGdxGame.ScreenMenu);
+
+    }
+
+    //перезапуск уровня
+    public static void restart() {
+        game.setScreen(new Levelboot(game));
+    }
+
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
         if (exit) {
@@ -231,9 +256,27 @@ public class MainGame implements Screen {
         }
 
 
+    }
+
+
+    @Override
+    public void resize(int width, int height) {
+        camera.setToOrtho(false, Gdx.graphics.getWidth() / Constants.PPM * 2, Gdx.graphics.getHeight() / Constants.PPM * 2);
+        sprite.setSize(128 / Constants.PPM * 2, 128 / Constants.PPM * 2);
+        controller.resize(width, height);
+    }
+
+    @Override
+    public void pause() {
 
     }
 
+    @Override
+    public void resume() {
+
+    }
+
+    //отрисовка портала
     private void finsih() {
 
         if (flag) {
@@ -306,6 +349,12 @@ public class MainGame implements Screen {
         }
     }
 
+    @Override
+    public void hide() {
+        dispose();
+    }
+
+    //отрисовка цветка
     private void flower() {
 
         if (rect.getPosition().x < positionflowerx && !unlockdoublejump) {
@@ -316,39 +365,7 @@ public class MainGame implements Screen {
         }
     }
 
-
-    @Override
-    public void resize(int width, int height) {
-        camera.setToOrtho(false, Gdx.graphics.getWidth() / Constants.PPM * 2, Gdx.graphics.getHeight() / Constants.PPM * 2);
-        sprite.setSize(128 / Constants.PPM * 2, 128 / Constants.PPM * 2);
-        controller.resize(width, height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    public static void backtomenu() {
-
-        game.setScreen(MyGdxGame.ScreenMenu);
-
-    }
-
-    @Override
-    public void hide() {
-        dispose();
-    }
-
-    public static void restart() {
-        game.setScreen(new Levelboot(game));
-    }
-
+    //анимация и отрисовка портала
     private void portal() {
 
         if (flag) {
@@ -414,6 +431,7 @@ public class MainGame implements Screen {
             blockcontrol = false;
         }
     }
+    //создания тела персонажа из связки 2 тел
 
     private void createRect(float x, float y) {
 
@@ -496,6 +514,7 @@ public class MainGame implements Screen {
 
     }
 
+    //прыжки ГГ
     private void playerJump() {
 
         if (cl.playerCanJump()) {
@@ -518,6 +537,7 @@ public class MainGame implements Screen {
         }
     }
 
+    //отрисовка анимации ГГ
     private void Draw() {
         if (init) {
             if (!cl.playerCanJump()) {
@@ -571,6 +591,7 @@ public class MainGame implements Screen {
         MyGdxGame.batch.end();
     }
 
+    //смерть ГГ
     private void playerDead() {
         if (cl.isPlayerDead()) {
             init = false;
@@ -596,6 +617,7 @@ public class MainGame implements Screen {
         }
     }
 
+    //спавн предметов
     private void spawn() {
         Array<Body> bodies = new Array<>();
 
@@ -674,6 +696,7 @@ public class MainGame implements Screen {
         createenemy();
     }
 
+    //парсер объектов
     private void ParseTileMap() {
         TiledObjectUtil.parseTiledObjectlayer(world, map.getLayers().get(Constants.TM_earth_collision).getObjects(), Constants.TM_earth_collision);
         TiledObjectUtil.parseTiledObjectlayer(world, map.getLayers().get(Constants.TM_wall_collision).getObjects(), Constants.TM_wall_collision);
@@ -686,6 +709,7 @@ public class MainGame implements Screen {
         TiledObjectUtil.parseTiledObjectlayer(world, map.getLayers().get(Constants.TM_enemy_point).getObjects(), Constants.TM_enemy_point);
     }
 
+    //шаг времени мира
     private void stepWorld() {
         float delta = Gdx.graphics.getDeltaTime();
 
@@ -698,6 +722,7 @@ public class MainGame implements Screen {
         }
     }
 
+    //создание тел коробок
     private void createBox() {
         Array<Body> bodies = new Array<>();
         world.getBodies(bodies);
@@ -714,6 +739,7 @@ public class MainGame implements Screen {
         }
     }
 
+    //отрисовка коробок
     private void drawBox() {
         for (Body bod : box) {
 
@@ -734,6 +760,7 @@ public class MainGame implements Screen {
 
     }
 
+    //создание параллакс эффекта
     private void parallax() {
 
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
@@ -770,6 +797,7 @@ public class MainGame implements Screen {
 
     }
 
+    //работа параллакс эффекта
     private void bgparallaxdraw() {
         for (Actor a : table0.getChildren()) {
             if (rect.getLinearVelocity().x != 0) {
@@ -789,6 +817,7 @@ public class MainGame implements Screen {
         }
     }
 
+    //работа камеры наблюдения
     private void cameraposition() {
         if (rect.getPosition().x > camera.viewportWidth / 2 && rect.getPosition().x < 200 - camera.viewportWidth / 2)
             camera.position.set(rect.getPosition().x, camera.position.y, 0);
@@ -797,6 +826,7 @@ public class MainGame implements Screen {
 
     }
 
+    //чекпоинт
     private void heckpoint() {
         if (rect.getPosition().x > positioncheckx && !incheak) {
             positionx = positioncheckx;
@@ -806,6 +836,7 @@ public class MainGame implements Screen {
 
     }
 
+    //отрисовка тел пуль
     private void shotdraw() {
 
         Array<Body> bodies = new Array<>();
@@ -839,6 +870,7 @@ public class MainGame implements Screen {
         }
     }
 
+    //создание тел пуль
     private void shot() {
         PolygonShape shape;
         shape = new PolygonShape();
@@ -876,7 +908,7 @@ public class MainGame implements Screen {
             Gdx.input.vibrate(750);
     }
 
-
+    //создание врагов
     private void createenemy() {
 
 
@@ -901,6 +933,7 @@ public class MainGame implements Screen {
 
     }
 
+    //передвижение врагов
     private void moveenemy() {
         if (enemy.getLinearVelocity().x > 0) {
             enemy.setLinearVelocity(4, 0);
@@ -921,6 +954,7 @@ public class MainGame implements Screen {
 
     }
 
+    //управление ГГ
     private void gamepad_delta_xy() {
         rect.setGravityScale(1);
         if (!blockcontrol) {
@@ -1016,34 +1050,20 @@ public class MainGame implements Screen {
 
     }
 
+    //режим меню
     private void menumode() {
         if (menumodeflag) {
             blockcontrol = true;
-//            Array<Body> bodies = new Array<>();
-//            world.getBodies(bodies);
-//            for (int i = 0; i < world.getBodyCount(); i++) {
-//                bodies.get(i).setActive(false);
-//            }
+
             menumodeflag = false;
             blockanimwater = true;
-//            freeze = true;
         } else {
             blockanimwater = false;
         }
-/*        if (freeze) {
-//            Array<Body> bodies = new Array<>();
-//            world.getBodies(bodies);
-//            for (int i = 0; i < world.getBodyCount(); i++) {
-//                bodies.get(i).setActive(true);
-//            }
-//            freeze = false;
-        }
-        if (controller.isEscPressed()) {
-
-        }*/
 
     }
 
+    //отрисовка бездействия персонажа
     private void idle() {
         animation_pers_x_left = 0;
         animation_pers_x_right = 0;
@@ -1057,8 +1077,7 @@ public class MainGame implements Screen {
             sprite.setFlip(true, false);
     }
 
-
-
+    //отрисовка врага
     private void enemydraw() {
 
 
