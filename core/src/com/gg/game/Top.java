@@ -12,13 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Top implements Screen {
+    //cоздание переменных
     private Stage stage;
     private MyGdxGame menu;
     private Sprite MenuScreen;
     private Sprite backgroundsprite;
     private Sprite listsprite;
     private Sprite headersprite;
-    public Top( MyGdxGame  top) {
+
+    //инициализация переменных
+    public Top(MyGdxGame  top) {
         this.menu = top;
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
 
@@ -42,6 +45,7 @@ public class Top implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -87,12 +91,15 @@ public class Top implements Screen {
         stage.dispose();
     }
 
+    //создание сцены с разметкой и кнопками
    private void  btn(){
         Table btn = new Table();
         btn.setSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight()*0.8f);
         btn.setPosition(Gdx.graphics.getWidth()/2f-btn.getWidth()/2,
                 Gdx.graphics.getHeight()/2f-btn.getHeight()/2-Gdx.graphics.getHeight()/10f);
+       //создание кнопок
         final Image exit = new Image(new Texture("rating/close_2.png"));
+       //прослушка кнопок
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -102,6 +109,7 @@ public class Top implements Screen {
                 super.clicked(event, x, y);
             }
         });
+       //создание разметки
         btn.defaults().expand();
         btn.add(exit).size(Gdx.graphics.getHeight()/8f,Gdx.graphics.getHeight()/8f).right().top().colspan(2);
         btn.row();

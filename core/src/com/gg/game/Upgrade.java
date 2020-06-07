@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Upgrade implements Screen {
+    //cоздание переменных
     Stage stage;
     MyGdxGame menu;
     private Sprite MenuScreen;
@@ -19,6 +20,7 @@ public class Upgrade implements Screen {
     private Sprite listsprite;
     private Sprite headersprite;
 
+    //инициализация переменных
     public Upgrade(MyGdxGame upgrade) {
         this.menu = upgrade;
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
@@ -44,6 +46,7 @@ public class Upgrade implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -89,12 +92,15 @@ public class Upgrade implements Screen {
         stage.dispose();
     }
 
+    //создание сцены с разметкой и кнопками
     public void btn() {
         Table btn = new Table();
         btn.setSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight() * 0.8f);
         btn.setPosition(Gdx.graphics.getWidth() / 2 - btn.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2 - btn.getHeight() / 2 - Gdx.graphics.getHeight() / 10);
+        //создание кнопок
         final Image exit = new Image(new Texture("rating/close_2.png"));
+        //прослушка кнопок
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -104,6 +110,7 @@ public class Upgrade implements Screen {
                 super.clicked(event, x, y);
             }
         });
+        //создание разметки
         btn.defaults().expand();
         btn.add(exit).size(Gdx.graphics.getHeight() / 8, Gdx.graphics.getHeight() / 8).right().top().colspan(2);
         btn.row();

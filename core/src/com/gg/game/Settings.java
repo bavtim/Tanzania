@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 public class Settings implements Screen {
-
+    //cоздание переменных
     private static MyGdxGame menu;
     private Stage stage;
     private Sprite MenuScreen;
@@ -30,7 +30,9 @@ public class Settings implements Screen {
     private Texture list;
     private Texture header;
 
+    //инициализация переменных
     public Settings(final MyGdxGame settings) {
+
         menu = settings;
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
         backgroundmenu = new Texture("Menu/menu.jpg");
@@ -65,6 +67,7 @@ public class Settings implements Screen {
 
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -122,6 +125,7 @@ public class Settings implements Screen {
 
     }
 
+    //создание сцены с разметкой и кнопками
     private void buttons() {
 
         Table btn = new Table();
@@ -131,7 +135,7 @@ public class Settings implements Screen {
 
         int pad = 5;
         int elements = 7;
-
+        //создание кнопок
         float height = ((btn.getHeight() - 50) / elements) - pad * 2;
         int secondCollumnWidth = (int) (btn.getWidth() / 4);
 
@@ -179,7 +183,7 @@ public class Settings implements Screen {
         vibration.setSize(Gdx.graphics.getHeight() / 10f * 3, Gdx.graphics.getHeight() / 10f);
         notification.setSize(Gdx.graphics.getHeight() / 10f * 3, Gdx.graphics.getHeight() / 10f);
         exit.setSize(Gdx.graphics.getHeight() / 10f, Gdx.graphics.getHeight() / 10f);
-
+//прослушка кнопок
         music.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -272,6 +276,7 @@ public class Settings implements Screen {
                 MyGdxGame.prefs.flush();
             }
         });
+        //создание разметки
         btn.defaults().expand();
 
         btn.add(exit).size(Gdx.graphics.getHeight() / 8f, Gdx.graphics.getHeight() / 8f).right().colspan(2);

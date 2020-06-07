@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 public class Win_screen implements Screen {
+    //cоздание переменных
     private Stage stage;
     private MyGdxGame menu;
     private Sprite MenuScreen;
@@ -21,6 +22,7 @@ public class Win_screen implements Screen {
     private Sprite headersprite;
     private byte countofstars = 0;
 
+    //инициализация переменных
     public Win_screen(MyGdxGame win, byte countofstars) {
         this.countofstars = countofstars;
         this.menu = win;
@@ -48,6 +50,7 @@ public class Win_screen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -93,13 +96,16 @@ public class Win_screen implements Screen {
         stage.dispose();
     }
 
+    //создание сцены с разметкой и кнопками
     private void btn() {
         Table btn = new Table();
         btn.setSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight() * 0.8f);
         btn.setPosition(Gdx.graphics.getWidth() / 2f - btn.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2f - btn.getHeight() / 2 - Gdx.graphics.getHeight() / 10f);
+        //создание кнопок
         final Image count = new Image(new Texture("you_win/star_" + countofstars + ".png"));
         final Image play = new Image(new Texture("btn/play.png"));
+        //прослушка кнопок
         play.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -109,7 +115,7 @@ public class Win_screen implements Screen {
                 super.clicked(event, x, y);
             }
         });
-
+//создание разметки
         btn.defaults().expand();
         btn.add().size(Gdx.graphics.getHeight() / 8f, Gdx.graphics.getHeight() / 8f).right().top().colspan(2);
         btn.row();

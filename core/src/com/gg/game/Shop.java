@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 public class Shop implements Screen {
-
+    //cоздание переменных
     private Stage stage;
     private MyGdxGame menu;
     private boolean exitflag = true;
@@ -27,6 +27,7 @@ public class Shop implements Screen {
     private Sprite listsprite;
     private Sprite headersprite;
 
+    //инициализация переменных
     public Shop(MyGdxGame shop) {
         this.menu = shop;
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
@@ -52,6 +53,7 @@ public class Shop implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
 
@@ -103,11 +105,13 @@ public class Shop implements Screen {
         stage.dispose();
     }
 
+    //создание сцены с разметкой и кнопками
     public void btn() {
         Table btn = new Table();
         btn.setSize(Gdx.graphics.getHeight() * 1.3f, Gdx.graphics.getHeight() * 0.8f);
         btn.setPosition(Gdx.graphics.getWidth() / 2f- btn.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2f - btn.getHeight() / 2 - Gdx.graphics.getHeight() / 10f);
+        //создание кнопок
         final Image exit = new Image(new Texture("shop/close_2.png"));
         final Image shop1 = new Image(new Texture("shop/1.png"));
         final Image shop2 = new Image(new Texture("shop/2.png"));
@@ -115,6 +119,7 @@ public class Shop implements Screen {
         final Image shop1btn = new Image(new Texture("shop/btn.png"));
         final Image shop2btn = new Image(new Texture("shop/btn.png"));
         final Image shop3btn = new Image(new Texture("shop/btn.png"));
+        //прослушка кнопок
         shop1btn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -207,6 +212,7 @@ public class Shop implements Screen {
                 super.clicked(event, x, y);
             }
         });
+        //создание разметки
         btn.defaults().expand();
         btn.add(exit).size(Gdx.graphics.getHeight() / 8f, Gdx.graphics.getHeight() / 8f).right().top().colspan(3);
         btn.row();

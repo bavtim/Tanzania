@@ -29,11 +29,6 @@ public class MyGdxGame extends Game {
 	FreeTypeFontGenerator generator;//генератор шрифта
 	BitmapFont font;//шрифт
 	Music music;//музыка меню
-	//	public static TextureRegion[] Animation_pers_blaster_shoot;
-//	public static TextureRegion[] Animation_pers_hurt;
-//	public static TextureRegion[] Animation_pers_idle;
-//	public static TextureRegion[] Animation_pers_jump;
-//	public static TextureRegion[] Animation_pers_run;
 	Sound tab1;//звуки закрытия окон
 	Sound tab2;//звуки переключения и щелчков
 	Sound denied;//звуки отказа доступа
@@ -82,7 +77,7 @@ public class MyGdxGame extends Game {
 		font.dispose();
 	}
 
-
+    //cоздание экранов
 	public void screen(){
 
 	ScreenMenu = new Menu(this);
