@@ -13,7 +13,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import com.badlogic.gdx.Gdx;
 import com.gg.game.utils.NotificationHandler;
 
-
+//адаптер ввывода уведомлений
 public class AdapterAndroid implements NotificationHandler {
 
     private Activity gameActivity;
@@ -24,10 +24,11 @@ public class AdapterAndroid implements NotificationHandler {
         context = this.gameActivity;
     }
 
+    //метод ввывода уведомлений
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void showNotification(String title, String text) {
-
+//для старых android
         if (Gdx.app.getVersion() <= 26) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.ic_launcher)
@@ -42,7 +43,7 @@ public class AdapterAndroid implements NotificationHandler {
 
             notificationManager.notify(notificationId, builder.build());
         } else {
-
+//для новых android
             int notifyID = 1;
             String CHANNEL_ID = "my_channel_01";
             CharSequence name = title;

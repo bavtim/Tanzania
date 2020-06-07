@@ -22,7 +22,7 @@ public class B2dContactListener implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
-        //условия взаимодействия
+        //условия взаимодействия, пуля - враг
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_bullet)||fb.getUserData() != null && fb.getUserData().equals(Constants.TM_bullet)) {
             if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_bullet)&&fb.getUserData() != null && fb.getUserData().equals(Constants.TM_enemy_point)){
 
@@ -35,7 +35,7 @@ public class B2dContactListener implements ContactListener {
             bulletdestroy=true;
         }
 
-
+        //условия взаимодействия, ноги- земля
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_box)||fb.getUserData() != null && fb.getUserData().equals(Constants.TM_box)){
             if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_box)&&fb.getUserData() != null && fb.getUserData().equals(Constants.TM_player_foot)){
                 numFootContacts++;
@@ -69,7 +69,7 @@ public class B2dContactListener implements ContactListener {
         //получение контактируемых тел
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
-        //условия взаимодействия
+        //условия взаимодействия, пуля - враг
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_bullet)||fb.getUserData() != null && fb.getUserData().equals(Constants.TM_bullet)) {
 
             bulletdestroy=false;
@@ -82,6 +82,7 @@ public class B2dContactListener implements ContactListener {
             }else
                 return;
         }
+        //условия взаимодействия, ноги- земля
         if(fa == null || fb == null) return;
 
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.TM_earth_collision)&&fb.getUserData() != null && fb.getUserData().equals(Constants.TM_player_foot)) {
@@ -92,6 +93,7 @@ public class B2dContactListener implements ContactListener {
         }
 
     }
+
     public boolean playerCanJump() { return numFootContacts > 0; }
     public boolean isPlayerDead() {return playerDead; }
     public boolean isBulletdestroy() {return bulletdestroy; }
@@ -102,12 +104,10 @@ public class B2dContactListener implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 
 }

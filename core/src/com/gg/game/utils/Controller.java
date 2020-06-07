@@ -16,15 +16,17 @@ import com.gg.game.MainGame;
 import com.gg.game.MyGdxGame;
 
 public class Controller {
-    public static boolean escPressed;
-    private SpriteBatch batch;
-    private Sprite backgroundsprite;
-    private Sprite listsprite;
-    private Sprite headersprite;
-    private Viewport viewport;
-    private Sprite text;
-    private Stage stage;
+    public static boolean escPressed;//нахождение в меню
+    private SpriteBatch batch;//холст для отрисовки
+    private Sprite backgroundsprite;//спрайты для отрисовки меню
+    private Sprite listsprite;//спрайты для отрисовки меню
+    private Sprite headersprite;//спрайты для отрисовки меню
+    private Viewport viewport;//вию порт для сцен
+    private Sprite text;//спрайты для отрисовки меню
+    private Stage stage;//сцена управления
     private boolean upPressed, leftPressed, rightPressed, bulletPressed;
+
+    //инициализация переменных
     public Controller() {
         batch = new SpriteBatch();
         text = new Sprite(new Texture("pause/text.png"));
@@ -55,21 +57,19 @@ public class Controller {
         createControll();
 
 
-
     }
 
+    //отрисовка меню + сцен управления
     public void draw() {
+
         if (escPressed) {
             menurender();
-
         }
-
         stage.draw();
 
     }
 
     public boolean isUpPressed() {
-
         return upPressed;
     }
 
@@ -85,7 +85,6 @@ public class Controller {
         return bulletPressed;
     }
     public boolean isRightPressed() {
-
         return rightPressed;
     }
 
@@ -98,6 +97,7 @@ public class Controller {
         stage.dispose();
     }
 
+    //создание сцены разметки для управления
     public void createControll() {
 
         escPressed = false;
@@ -225,6 +225,7 @@ public class Controller {
         stage.addActor(gamepad);
     }
 
+    //создание сцены разметки для меню
     public void createmenu() {
         escPressed = true;
 
@@ -277,12 +278,14 @@ public class Controller {
 
     }
 
+    //режим выхода из меню
     private void gamemod() {
         MainGame.blockcontrol = false;
         MainGame.menumodeflag = false;
 
     }
 
+    //отрисовка меню
     private void menurender() {
         batch.begin();
         backgroundsprite.draw(batch);

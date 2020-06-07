@@ -38,15 +38,16 @@ import static com.gg.game.utils.Constants.TM_wall_density;
 import static com.gg.game.utils.Constants.TM_wall_friction;
 import static com.gg.game.utils.Constants.TM_wall_restitution;
 
-
+//парсер преобразования объектов tilemap в объекты box2d
 public class TiledObjectUtil {
 
     private static Vector2 position;
 
+    //цикл для всех объектов
     public static void parseTiledObjectlayer(World world, MapObjects objects, String str) {
         float density = 0f, friction = 0f, restitution = 0f;
         position = new Vector2();
-
+//задавание константных значений для объектов разного типа
         for (MapObject object : objects) {
             switch (str) {
                 case TM_earth_collision:
@@ -77,6 +78,9 @@ public class TiledObjectUtil {
 
 
             }
+            //определение типа объектов- последующее преобразование
+
+
             if (object instanceof RectangleMapObject) {
 
                 PolygonShape shape;
@@ -174,6 +178,7 @@ public class TiledObjectUtil {
         }
     }
 
+    //блоки преобразований
     private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
 
         Rectangle rectangle = rectangleObject.getRectangle();
