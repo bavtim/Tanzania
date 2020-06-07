@@ -132,6 +132,13 @@ public class MainGame implements Screen {
     public MainGame(MyGdxGame game) {
         MainGame.game = game;
         game.music.pause();
+        game.maingame.setVolume(MyGdxGame.prefs.getInteger("volume", 10) / 100f);
+        game.maingame.setLooping(true);
+        game.maingame.play();
+
+
+        if (!MyGdxGame.prefs.getBoolean("music"))
+            game.maingame.pause();
 
         bullet = new Texture("Tilemap/bullet.png");
 
@@ -483,7 +490,8 @@ public class MainGame implements Screen {
 
     @Override
     public void dispose() {
-        System.out.println("DISPOSE");
+
+
         controller.dispose();
         map.dispose();
         world.dispose();
@@ -510,8 +518,14 @@ public class MainGame implements Screen {
             Levelboot.Animation_enemyork1_hurt[i].getTexture().dispose();
         for (int i = 0; i < Levelboot.Animation_enemyork1_idle.length; i++)
             Levelboot.Animation_enemyork1_idle[i].getTexture().dispose();
+        game.maingame.pause();
+        game.music.setVolume(MyGdxGame.prefs.getInteger("volume", 10) / 100f);
+        game.music.setLooping(true);
+        game.music.play();
 
 
+        if (!MyGdxGame.prefs.getBoolean("music"))
+            game.music.pause();
     }
 
     //прыжки ГГ

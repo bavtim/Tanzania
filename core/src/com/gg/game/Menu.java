@@ -26,9 +26,10 @@ public class Menu implements Screen {
     public Menu(MyGdxGame menu) {
         this.menu = menu;
         buttons();
-        menu.music.play();
         menu.music.setVolume(MyGdxGame.prefs.getInteger("volume", 10) / 100f);
         menu.music.setLooping(true);
+        menu.music.play();
+
 
         if (!MyGdxGame.prefs.getBoolean("music"))
             menu.music.pause();

@@ -8,7 +8,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -16,12 +15,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gg.game.utils.NotificationHandler;
 
 public class MyGdxGame extends Game {
-	public NotificationHandler notificationHandler;
+    static Screen ScreenMenuLevelSelect;//экран выбора уровня
 	public static Screen ScreenMenu;//экран загрузки
-	public static Screen ScreenMenuLevelSelect;//экран выбора уровня
+    NotificationHandler notificationHandler;
 	public static SpriteBatch batch;//холст
 	public static Preferences prefs;//сохранненые настройки
-	FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    Music maingame;//музыка игры
 	public static OrthographicCamera camera;//карера
 	public static FitViewport viewport;//переменная обрезания камеры
 	//массивы текстур для анимации персонажа
@@ -29,10 +28,10 @@ public class MyGdxGame extends Game {
 	FreeTypeFontGenerator generator;//генератор шрифта
 	BitmapFont font;//шрифт
 	Music music;//музыка меню
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 	Sound tab1;//звуки закрытия окон
 	Sound tab2;//звуки переключения и щелчков
 	Sound denied;//звуки отказа доступа
-	private Texture texture;//временная текстура для заполнения массива текстур для анимации персонажей
 
 	public void create() {
 
@@ -42,6 +41,7 @@ public class MyGdxGame extends Game {
 		Gdx.graphics.setTitle("Танзания");
 		//подгрузка файлов
 		prefs = Gdx.app.getPreferences("Data");
+        maingame = Gdx.audio.newMusic(Gdx.files.internal("music/maingame.mp3"));
 		denied= Gdx.audio.newSound(Gdx.files.internal("music/denied.mp3"));
 		tab1= Gdx.audio.newSound(Gdx.files.internal("music/Tab1.mp3"));
 		tab2= Gdx.audio.newSound(Gdx.files.internal("music/Tab2.mp3"));
