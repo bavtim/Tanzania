@@ -14,13 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+//меню
 public class Menu implements Screen {
-
+    //cоздание переменных
     private MyGdxGame menu;
     private Stage stage;
     private Sprite MenuScreen;
     private Texture backgroundmenu;
 
+    //инициализация переменных
     public Menu(MyGdxGame menu) {
         this.menu = menu;
         buttons();
@@ -40,6 +42,7 @@ public class Menu implements Screen {
 
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
 
@@ -88,15 +91,12 @@ public class Menu implements Screen {
 
     }
 
+    //создание сцены с разметкой и кнопками
     private void buttons() {
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
-
-
         backgroundmenu = new Texture("Menu/menu.jpg");
         MenuScreen = new Sprite(backgroundmenu);
         MenuScreen.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-
         Table btn = new Table();
         final Image about = new Image();
         if (MyGdxGame.prefs.getBoolean("debugmode", false)) {
@@ -105,7 +105,7 @@ public class Menu implements Screen {
 
             about.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("btn/upgrade.png"))));
         }
-
+        //создание кнопок
         Image leader = new Image(new Texture("btn/shop.png"));
         Image prize = new Image(new Texture("Menu/prize.png"));
         Image play = new Image(new Texture("Menu/play.png"));
@@ -115,7 +115,7 @@ public class Menu implements Screen {
         prize.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
         play.setSize(Gdx.graphics.getHeight() / 4f, Gdx.graphics.getHeight() / 4f);
         setting.setSize(Gdx.graphics.getHeight() / 5f, Gdx.graphics.getHeight() / 5f);
-
+//прослушка кнопок
         about.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -173,7 +173,7 @@ public class Menu implements Screen {
                 super.clicked(event, x, y);
             }
         });
-
+//создание разметки
         btn.setFillParent(true);
         btn.add(about).padLeft(20).padTop(20).size(about.getHeight(), about.getHeight()).left();
         btn.add(setting).padRight(20).padTop(20).size(setting.getHeight(), setting.getHeight()).right();

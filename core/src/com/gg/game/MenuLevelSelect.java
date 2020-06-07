@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 public class MenuLevelSelect extends MyGdxGame implements Screen {
+    //cоздание переменных
     public static MyGdxGame menu;
     private Stage stage;
     private Sprite MenuScreen;
@@ -21,6 +22,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
     private Sprite listsprite;
     private Sprite headersprite;
 
+    //инициализация переменных
     public MenuLevelSelect(MyGdxGame menuenuLevelSelect) {
 
         menu = menuenuLevelSelect;
@@ -48,6 +50,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
 
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
 
@@ -98,11 +101,13 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
         stage.dispose();
     }
 
+    //создание сцены с разметкой и кнопками
     private void btn() {
         Table btn = new Table();
         btn.setSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight() * 0.8f);
         btn.setPosition(Gdx.graphics.getWidth() / 2f - btn.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2f - btn.getHeight() / 2 - Gdx.graphics.getHeight() / 10f);
+        //создание кнопок
         final Image exit = new Image(new Texture("rating/close_2.png"));
         final Image btn1 = new Image(new Texture("level_select/table1.png"));
         final Image btn2 = new Image(new Texture("level_select/table.png"));
@@ -123,6 +128,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
         btn7.setSize(Gdx.graphics.getHeight() / 6f, Gdx.graphics.getHeight() / 6f);
         btn8.setSize(Gdx.graphics.getHeight() / 6f, Gdx.graphics.getHeight() / 6f);
         btn9.setSize(Gdx.graphics.getHeight() / 6f, Gdx.graphics.getHeight() / 6f);
+        //прослушка кнопок
         btn1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -214,6 +220,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
                 super.clicked(event, x, y);
             }
         });
+        //создание разметки
         btn.defaults().expand();
         btn.add(exit).size(Gdx.graphics.getHeight() / 8f, Gdx.graphics.getHeight() / 8f).right().top().colspan(3);
         btn.row();
