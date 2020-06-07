@@ -45,8 +45,7 @@ public class MenuLevelSelect extends MyGdxGame implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-//        if(menu.prefs.getBoolean("firsttime",true));
-//        menu.setScreen(menu.ScreenGame);
+
     }
 
     @Override

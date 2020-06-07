@@ -13,30 +13,32 @@ import com.badlogic.gdx.utils.Timer;
 
 
 public class Levelboot implements Screen {
-    public static TextureRegion[] Animation_pers_blaster_shoot;
-    public static TextureRegion[] Animation_pers_hurt;
-    public static TextureRegion[] Animation_pers_idle;
-    public static TextureRegion[] Animation_pers_jump;
-    public static TextureRegion[] Animation_pers_run;
-    public static TextureRegion[] Animation_enemyork1_walk;
-    public static TextureRegion[] Animation_enemyork1_hurt;
-    public static TextureRegion[] Animation_enemyork1_idle;
+    //регионы для анимации персонажей
+    static TextureRegion[] Animation_pers_blaster_shoot;
+    static TextureRegion[] Animation_pers_hurt;
+    static TextureRegion[] Animation_pers_idle;
+    static TextureRegion[] Animation_pers_jump;
+    static TextureRegion[] Animation_pers_run;
+    static TextureRegion[] Animation_enemyork1_walk;
+    static TextureRegion[] Animation_enemyork1_hurt;
+    static TextureRegion[] Animation_enemyork1_idle;
     private static long SPLASH_MINIMUM_MILLIS = 3000L;//минимальное время для бутскрина
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    FreeTypeFontGenerator generator;//генератор шрифта
-    BitmapFont font;//шрифт
-    boolean flag;
-    float timer;
+    private BitmapFont font;//шрифт
+    private boolean flag;//флаг анимации
+    private float timer;//таймер анимации
     private MyGdxGame menu;
-    private Sprite MenuScreen;
-    private GlyphLayout glyphLayout;
-    private float deltatime = 0;
-    public Levelboot(MyGdxGame levelboot) {
+    private Sprite MenuScreen;//спрайт для фона
+    private GlyphLayout glyphLayout;//лайаут для текста
+    private float deltatime = 0;//время кадра
+
+    Levelboot(MyGdxGame levelboot) {
         this.menu = levelboot;
         glyphLayout = new GlyphLayout();
 
         MenuScreen = new Sprite(new Texture("level_select/levelboot.png"));
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("ttf/segoeprb.ttf"));
+        //генератор шрифта
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ttf/segoeprb.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.characters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
         parameter.size = Gdx.graphics.getHeight() / 6;
         font = generator.generateFont(parameter);
@@ -53,6 +55,7 @@ public class Levelboot implements Screen {
 
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -61,7 +64,7 @@ public class Levelboot implements Screen {
         MyGdxGame.batch.begin();
 
         MenuScreen.draw(MyGdxGame.batch);
-
+//анимация
         if (deltatime < 1) {
             if (flag) {
                 if (timer > 0)
@@ -110,6 +113,7 @@ public class Levelboot implements Screen {
         font.dispose();
     }
 
+    //открытие второго потока для подгрузки текстур, пока в первом идет показ анимации
     private void bootassert() {
         final long splash_start_time = System.currentTimeMillis();
         new Thread(new Runnable() {
@@ -141,6 +145,7 @@ public class Levelboot implements Screen {
 
     }
 
+    //парсер для текстур из файлов
     private void TextureAtlas() {
         Animation_pers_blaster_shoot = new TextureRegion[8];
         Animation_pers_hurt = new TextureRegion[10];

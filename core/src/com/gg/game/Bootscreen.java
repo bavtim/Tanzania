@@ -4,39 +4,39 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-
+//экран загрузки игры
 public class Bootscreen implements Screen {
-    private Sprite sprite;
-    private float timer = 0f, timer1 = 0f;
-    private boolean flag = false, flag1 = false;
-    private BitmapFont font;
-    private Texture Bootscreen_IMG;
-    private float deltatime;
+    private Sprite sprite;//спрайт  картинки загрузки
+    private float timer = 0f, timer1 = 0f;//таймеры для анимаций
+    private boolean flag = false;//булевое значение для переключения блока анимаций
+    private Texture Bootscreen_IMG;//текстура загрузки
+    private float deltatime;//переменная для получения времени кадров
     MyGdxGame boot;
 
     Bootscreen(MyGdxGame boot) {
         this.boot = boot;
-    }
-
-    @Override
-    public void show() {
         Bootscreen_IMG = new Texture("Bootscreen/joystick.png");
         sprite = new Sprite(Bootscreen_IMG, 0, 0, 512, 512);
         sprite.setPosition(Gdx.graphics.getWidth() / 2f - 256, Gdx.graphics.getHeight() / 2f - 256);
-        font = new BitmapFont();
-        font.setColor(0, 0, 0, 0);
-        font.getData().setScale(Gdx.graphics.getWidth() / 100f);
+
         sprite.setColor(0, 0, 0, 0);
     }
 
     @Override
+    public void show() {
+
+    }
+
+    // отрисовка всего и вся
+    @Override
     public void render(float delta) {
+        //очистка экрана от прошлого кадра
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         deltatime = Gdx.graphics.getDeltaTime() * 1.25f;
+        //анимация мигания картинки
         if (deltatime < 1) {
             if (flag) {
                 if (timer > 0)
@@ -52,15 +52,14 @@ public class Bootscreen implements Screen {
             }
 
         }
-
+//отрисовка
 
         sprite.setColor(0, 0, 0, timer);
 
         MyGdxGame.camera.update();
         MyGdxGame.batch.setProjectionMatrix(MyGdxGame.camera.combined);
-        font.setColor(0, 0, 0, timer1);
+
         MyGdxGame.batch.begin();
-        font.draw(MyGdxGame.batch, "GGgame", Gdx.graphics.getWidth() / 2f - Gdx.graphics.getWidth() / 3.5f, Gdx.graphics.getHeight() / 2f+ Gdx.graphics.getWidth() / 10f, 0, 40, false);
         sprite.draw(MyGdxGame.batch);
         MyGdxGame.batch.end();
 
@@ -70,7 +69,7 @@ public class Bootscreen implements Screen {
     public void resize(int width, int height) {
         MyGdxGame.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sprite.setPosition(Gdx.graphics.getWidth() / 2f - 256, Gdx.graphics.getHeight() / 2f - 256);
-        font.getData().setScale(Gdx.graphics.getWidth() / 100f);
+
     }
 
     @Override
@@ -90,7 +89,7 @@ public class Bootscreen implements Screen {
 
     @Override
     public void dispose() {
-        font.dispose();
+
         Bootscreen_IMG.dispose();
 
     }

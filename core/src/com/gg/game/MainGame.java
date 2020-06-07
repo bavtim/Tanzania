@@ -93,7 +93,6 @@ public class MainGame implements Screen {
     private float timershot = 2;
     private boolean unlockdoublejump = false;
     private Texture bullet;
-    private Texture dim;
     private float timerenemy = 0;
     private boolean flag1 = true;
     private boolean temperflag = true;

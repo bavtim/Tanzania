@@ -14,14 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gg.game.utils.Constants;
 
+// меню дебага
 public class About implements Screen {
-    private Stage stage;
+    private Stage stage;//сцена
     private MyGdxGame menu;
-    private Sprite MenuScreen;
-    private Sprite backgroundsprite;
-    private Sprite listsprite;
-    private Sprite headersprite;
+    private Sprite MenuScreen;//cпрайты для отрисовки меню
+    private Sprite backgroundsprite;//cпрайты для отрисовки меню
+    private Sprite listsprite;//cпрайты для отрисовки меню
+    private Sprite headersprite;//cпрайты для отрисовки меню
 
+    //Инициализация всех переменных
     About(MyGdxGame about) {
         this.menu = about;
         stage = new Stage(MyGdxGame.viewport, MyGdxGame.batch);
@@ -43,9 +45,11 @@ public class About implements Screen {
 
     @Override
     public void show() {
+        //режим обработки косаний
         Gdx.input.setInputProcessor(stage);
     }
 
+    //отрисовка всего и вся
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -96,11 +100,14 @@ public class About implements Screen {
         stage.dispose();
     }
 
+    //создание разметки , сцены и кнопок
     private void btn() {
+        //создание стола
         Table btn = new Table();
         btn.setSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight() * 0.8f);
         btn.setPosition(Gdx.graphics.getWidth()/ 2f - btn.getWidth() / 2,
                 Gdx.graphics.getHeight() / 2f - btn.getHeight() / 2 - Gdx.graphics.getHeight() / 10f);
+        //инициализация кнопок
         final Image exit = new Image(new Texture("about/close_2.png"));
 
         final Image debugmode;
@@ -110,7 +117,7 @@ public class About implements Screen {
             debugmode = new Image(new Texture("settings/95.png"));
         final Image vk = new Image(new Texture("about/vk.jpg"));
         debugmode.setSize(Gdx.graphics.getHeight() / 10f * 3, Gdx.graphics.getHeight() / 10f);
-
+        //обработчик нажатий
         vk.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -120,6 +127,7 @@ public class About implements Screen {
                 super.clicked(event, x, y);
             }
         });
+        //обработчик нажатий
         debugmode.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -146,6 +154,7 @@ public class About implements Screen {
                 super.clicked(event, x, y);
             }
         });
+        //создание разметки на сцене
         btn.defaults().expand();
         btn.add(exit).size(Gdx.graphics.getHeight() / 8f, Gdx.graphics.getHeight() / 8f).right().top().colspan(2);
         btn.row();
