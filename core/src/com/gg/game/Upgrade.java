@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,7 +20,7 @@ public class Upgrade implements Screen {
     private Sprite backgroundsprite;
     private Sprite listsprite;
     private Sprite headersprite;
-
+    private GlyphLayout glyphLayout;
     //инициализация переменных
     public Upgrade(MyGdxGame upgrade) {
         this.menu = upgrade;
@@ -57,11 +58,13 @@ public class Upgrade implements Screen {
             stage.setDebugAll(false);
         }
         MyGdxGame.batch.begin();
-
+        glyphLayout = new GlyphLayout();
         MenuScreen.draw(MyGdxGame.batch);
         backgroundsprite.draw(MyGdxGame.batch);
         listsprite.draw(MyGdxGame.batch);
         headersprite.draw(MyGdxGame.batch);
+        glyphLayout.setText(menu.font, "Ваш счет " + MyGdxGame.prefs.getInteger("Countstar", 0) + " звезд");
+        menu.font.draw(MyGdxGame.batch, glyphLayout, Gdx.graphics.getWidth() / 2f - glyphLayout.width / 2, Gdx.graphics.getHeight() / 8f * 5);
         MyGdxGame.batch.end();
         stage.draw();
     }

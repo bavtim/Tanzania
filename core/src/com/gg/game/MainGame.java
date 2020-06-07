@@ -37,6 +37,7 @@ public class MainGame implements Screen {
     private static final float STEP_TIME = 1f / 60f;//шаг времени
     //флаги
     public static boolean menumodeflag = false;
+    boolean soundportal = true;
     private static float positionx = 10f, positiony = 10f;//дефолтное расположение точки спавна персонажа
     private static float positioncheckx = 10f, positionchecky = 10f;//дефолтное расположение точки чекпоинта
     private static boolean incheak = false;//нахождение в чеке
@@ -131,6 +132,12 @@ public class MainGame implements Screen {
     //инициализация переменных
     public MainGame(MyGdxGame game) {
         MainGame.game = game;
+
+    }
+
+
+    @Override
+    public void show() {
         game.music.pause();
         game.maingame.setVolume(MyGdxGame.prefs.getInteger("volume", 10) / 100f);
         game.maingame.setLooping(true);
@@ -153,6 +160,7 @@ public class MainGame implements Screen {
         map = new TmxMapLoader().load("Tilemap/tin.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1f / Constants.PPM);
         ParseTileMap();
+        System.out.println("shiw");
         spawn();
         sprite = new Sprite(Levelboot.Animation_pers_run[12], 300, 150, 525, 660);
         sprite.setPosition(Gdx.graphics.getWidth() / 2f - sprite.getWidth() / 2,
@@ -172,12 +180,6 @@ public class MainGame implements Screen {
 
         enemysprite = new Sprite();
         enemysprite.setSize(8, 8);
-
-    }
-
-
-    @Override
-    public void show() {
 
     }
 
@@ -332,33 +334,14 @@ public class MainGame implements Screen {
 
         }
         if (rect.getPosition().x >= positionenemyx + 24) {
-            //     game.setScreen(new Win_screen(game, (byte) 0));
-            //  game.setScreen(new Shop(game));
-//            size += Gdx.graphics.getDeltaTime() * 7;
-            // blockcontrol = true;
-            System.out.println("12121212");
             exit = true;
-//            MyGdxGame.batch.draw(
-//                    portaltexture,
-//                    positionenemyx + 26,
-//                    positionenemyy - 2,
-//                    3,
-//                    3,
-//                    384 / Constants.PPM,
-//                    384 / Constants.PPM,
-//                    size,
-//                    size,
-//                    (float) Math.toDegrees(Math.abs(timeportal)),
-//                    0, 0, 384, 384,
-//                    false, false
-//
-//            );
         }
     }
 
     @Override
     public void hide() {
         dispose();
+
     }
 
     //отрисовка цветка
@@ -374,6 +357,9 @@ public class MainGame implements Screen {
 
     //анимация и отрисовка портала
     private void portal() {
+        if (soundportal)
+            if (MyGdxGame.prefs.getBoolean("sound"))
+                game.portal.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
 
         if (flag) {
             timeportal += Gdx.graphics.getDeltaTime() * 3f;
@@ -491,7 +477,7 @@ public class MainGame implements Screen {
     @Override
     public void dispose() {
 
-
+        incheak = false;
         controller.dispose();
         map.dispose();
         world.dispose();
@@ -592,8 +578,13 @@ public class MainGame implements Screen {
 
         MyGdxGame.batch.begin();
         drawBox();
-        if (portal)
+        if (portal) {
             portal();
+            soundportal = false;
+        } else {
+            soundportal = true;
+        }
+
         if (pers)
             sprite.draw(MyGdxGame.batch);
         if (flag1)
@@ -659,8 +650,10 @@ public class MainGame implements Screen {
         for (int i = 0; i < world.getBodyCount(); i++) {
             if (bodies.get(i).getUserData() != null) {
                 if (bodies.get(i).getUserData().equals(Constants.TM_spawn)) {
+
                     positionx = bodies.get(i).getPosition().x;
                     positiony = bodies.get(i).getPosition().y;
+
                     world.destroyBody(bodies.get(i));
                     break;
 
@@ -676,8 +669,10 @@ public class MainGame implements Screen {
         for (int i = 0; i < world.getBodyCount(); i++) {
             if (bodies.get(i).getUserData() != null) {
                 if (bodies.get(i).getUserData().equals(Constants.TM_checkpoint)) {
+                    System.out.println("123");
                     positioncheckx = bodies.get(i).getPosition().x;
                     positionchecky = bodies.get(i).getPosition().y;
+                    System.out.println(positionx);
                     world.destroyBody(bodies.get(i));
 
 
@@ -920,6 +915,9 @@ public class MainGame implements Screen {
         body.setGravityScale(0);
         if (MyGdxGame.prefs.getBoolean("vibration", true))
             Gdx.input.vibrate(750);
+        if (MyGdxGame.prefs.getBoolean("sound"))
+            game.bullet.play(MyGdxGame.prefs.getInteger("volume", 10) / 10f);
+
     }
 
     //создание врагов

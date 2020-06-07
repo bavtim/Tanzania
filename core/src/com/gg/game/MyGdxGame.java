@@ -32,15 +32,17 @@ public class MyGdxGame extends Game {
 	Sound tab1;//звуки закрытия окон
 	Sound tab2;//звуки переключения и щелчков
 	Sound denied;//звуки отказа доступа
-
+	Sound bullet;
+	Sound portal;
 	public void create() {
-
 
 		//параметры запуска
 		Gdx.graphics.setResizable(false);
 		Gdx.graphics.setTitle("Танзания");
 		//подгрузка файлов
 		prefs = Gdx.app.getPreferences("Data");
+		portal = Gdx.audio.newSound(Gdx.files.internal("music/portal.mp3"));
+		bullet = Gdx.audio.newSound(Gdx.files.internal("music/bullet.mp3"));
         maingame = Gdx.audio.newMusic(Gdx.files.internal("music/maingame.mp3"));
 		denied= Gdx.audio.newSound(Gdx.files.internal("music/denied.mp3"));
 		tab1= Gdx.audio.newSound(Gdx.files.internal("music/Tab1.mp3"));
@@ -79,7 +81,6 @@ public class MyGdxGame extends Game {
 
     //cоздание экранов
 	public void screen(){
-
 	ScreenMenu = new Menu(this);
 	ScreenMenuLevelSelect= new MenuLevelSelect(this);
 
